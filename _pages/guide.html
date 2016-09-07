@@ -348,8 +348,262 @@ permalink: /guide/
 
     <p>And it’s done! Try deleting one of your photos now and see what happens.</p>
 
-    <h3 class="text-underline">8. Styling</h3>
-    <p>Add bootstrap css framework</p>
+    <h3 class="text-underline">7. Styling</h3>
+
+    <p>Now, ehem... It's the moment of truth. Styling!</p>
+
+    <p>To start, open <code>Gemfile</code>, and right below your <code>carrierwave</code> gem, add:</p>
+
+    {% highlight erb %}
+    gem 'bootstrap-sass', '~> 3.3.6'
+    {% endhighlight %}
+
+    <p>Remember, you have to run:</p>
+
+    {% highlight erb %}$ bundle install{% endhighlight %}
+
+    <p>Every time you add a new gem.</p>
+
+    <p>You might also need to restart your server so the newly added gem is loaded.</p>
+
+    <p>Now, in <code>app/assets/stylesheets</code>, rename <code>application.css</code> to <code>application.scss</code>.</p>
+
+    <p>Then, replace all of its content, with:</p>
+
+    {% highlight erb %}
+    @import "bootstrap-sprockets";
+    @import "bootstrap";
+    {% endhighlight %}
+
+    <p style="font-weight: bold;">Checkpoint:</p>
+
+    <p>My <code>application.scss</code> looks like this:</p>
+
+    <img src="../images/application-scss.png" alt="">
+
+    <p>Next, open <code>application.js</code> in <code>app/assets/javascripts</code>, and add the following:</p>
+
+    {% highlight js %}
+    //= require bootstrap-sprockets
+    {% endhighlight %}
+
+    <p>Below this line of code:</p>
+
+    {% highlight js %}
+    //= require jquery_ujs
+    {% endhighlight %}
+
+    <p style="font-weight: bold;">Mentor: Talk a little about CSS, CSS Framework and Bootstrap.</p>
+
+    <p>Okay so you have Bootstrap installed. Now, what?</p>
+
+    <p>Since this application is after all, a clone of Instagram, we're going to steal their styling, just a little bit.</p>
+
+    <p>In <code>app/views/layouts/</code>, open <code>application.html.erb</code> and add the following code, right below <code>body</code>:</p>
+
+    {% highlight erb %}
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <%= link_to "InstaClone", photos_path, class: "navbar-brand" %>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><%= link_to "About", photos_path %></li>
+            <li><%= link_to "New Photo", new_photo_path %></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    {% endhighlight %}
+
+    <p>This is our basic header, and it's shown in all of our pages because we put the code in <code>application.html.erb</code>. This means we don't have to add the navbar to everything!</p>
+
+    <p>Still in <code>application.html.erb</code>, replace:</p>
+
+    {% highlight erb %}
+    <%= yield %>
+    {% endhighlight %}
+
+    <p>With the following:</p>
+
+    {% highlight erb %}
+    <section class="container">
+      <%= yield %>
+    </section>
+    {% endhighlight %}
+
+    <p>Now, let's style the photos index page first. Add these code to your <code>application.scss</code>:</p>
+
+    {% highlight scss %}
+    body {
+      background-color: #fafafa;
+      font-family: proxima-nova, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    }
+
+    .navbar-brand {
+      a {
+        color: #125688;
+      }
+    }
+
+    .navbar-default {
+      background-color: #fff;
+      height: 54px;
+      .navbar-nav li a {
+        color: #125688;
+      }
+    }
+
+    .navbar-container {
+      width: 640px;
+      margin: 0 auto;
+    }
+
+    .photos-wrapper {
+      padding-top: 40px;
+      margin: 0 auto;
+      max-width: 642px;
+      width: 100%;
+    }
+
+    .photo {
+      background-color: #fff;
+      border-color: #edeeee;
+      border-style: solid;
+      border-radius: 3px;
+      border-width: 1px;
+      margin-bottom: 60px;
+    }
+
+    .photo-head {
+      height: 64px;
+      padding: 14px 20px;
+      color: #125688;
+      font-size: 15px ;
+      line-height: 18px;
+      .thumbnail {}
+      .name {
+        display: block;
+      }
+    }
+
+    .image {
+      border-bottom: 1px solid #eeefef;
+      border-top: 1px solid #eeefef;
+    }
+
+    .caption {
+      padding: 24px 24px;
+      font-size: 15px;
+      line-height: 18px;
+
+    }
+
+    .form-wrapper {
+      width: 60%;
+      margin: 20px auto;
+      background-color: #fff;
+      padding: 40px;
+      border: 1px solid #eeefef;
+      border-radius: 3px;
+    }
+
+    .edit-links {
+      margin-top: 20px;
+      margin-bottom: 40px;
+    }
+    {% endhighlight %}
+
+    <p>Then, in <code>app/views/photos/index.html.erb</code>, replace the content of the page as follows:</p>
+
+    {% highlight erb %}
+    <% if @photos.any? %>
+    <div class="photos-wrapper row">
+      <% @photos.each do |photo| %>
+        <div class="photo">
+          <div class="photo-head">
+            <h4 class="name">
+              RG Kuching
+            </h4>
+          </div>
+          <div class="image center-block">
+            <%= image_tag(photo.file_url, class: "img-responsive") if photo.file.present? %>
+          </div>
+          <p class="caption">
+            <%= photo.caption %>
+            <%= link_to "Delete", photo_path(photo), method: :delete, data: { confirm: "Are you sure you want to delete this photo?" }, class: "btn btn-danger btn-xs" %>
+          </p>
+        </div>
+      <% end  %>
+    </div>
+    <% else  %>
+      <p>No photos found.</p>
+    <% end %>
+    {% endhighlight %}
+
+    <p style="font-weight: bold;">Checkpoint: Now, if you refresh your browser, the page should look something like this:
+    </p>
+
+    <img src="../images/instaclone-index.png" alt="">
+
+    <p>Much better than before, right?</p>
+
+    <p>Okay, next let's quickly tidy up our new post view and form.</p>
+
+    <p>Open the <code>apps/views/photos/new.html.erb</code>, and make sure your code look similar to this:</p>
+
+    {% highlight erb %}
+    <div class="form-wrapper">
+      <%= form_for @photo, html: { class: 'form-horizontal', multipart: true } do |f| %>
+
+        <div class="form-group">
+          <%= f.label :file %><br>
+          <%= f.file_field :file, class: "form-control" %>
+        </div>
+
+        <div class="form-group text-center">
+          <%= f.label :caption %><br>
+          <%= f.text_field :caption, class: "form-control" %>
+        </div>
+
+        <div class="form-group text-center">
+          <%= f.submit class: "btn btn-success btn-block" %>
+        </div>
+      <% end %>
+    </div>
+    {% endhighlight %}
+
+    <p style="font-weight: bold;">Checkpoint: This is how my photo form looks like:</p>
+
+    <img src="../images/instaclone-new.png" alt="">
+
+    <p></p>
+
+    <h3 class="text-underline">8. Tidying up</h3>
+
+    <p>Now, one last thing. Let's fine tune the route a little bit.</p>
+
+    <p>If go to the index page of your app (that’s your app URL without /photos part) it still shows the "Yay! You're on Rails!" page. Let's make it go directly to the photos page.</p>
+
+    <p>Open <code>config/routes.rb</code> and after the first line, add:</p>
+
+    {% highlight erb %}
+      root "photos#index"
+    {% endhighlight %}
+
+    <p>Test the change by refreshing the preview page in your browser.</p>
+
+    <p style="font-weight: bold;">Mentor: Talk about routes, and include details on the order of routes and their relation to static files.</p>
+
+    <p>Now, if you go to the main page of your app, you will see the list of your photos.</p>
+
     <h3 class="text-underline">9. What's Next?</h3>
     <p>Toodles!</p>
 
