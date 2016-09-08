@@ -1,23 +1,20 @@
 ---
+title: Rails Girls MY
 layout: default
 ---
 
 <div class="home">
-
-  <h1 class="page-heading">Posts</h1>
-
-  <ul class="post-list">
-    {% for post in site.posts %}
-      <li>
-        <span class="post-meta">{{ post.date | date: "%b %-d, %Y" }}</span>
-
-        <h2>
-          <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title | escape }}</a>
-        </h2>
-      </li>
-    {% endfor %}
-  </ul>
-
-  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
-
+  <div class="content">
+    <h1>Rails Girls Guides</h1>
+    <p>These guides are built to provide tools and a community for women to understand technology and how to build their ideas.</p>
+    <ul>
+      <li>Start Here - Getting Started with Rails</li>
+      <li>Learn More</li>
+      <li><a href="/guide-scaffold">Rails Girls MY Tutorial (Scaffold)</a></li>
+      <li><a href="/guide-extended">Rails Girls MY Tutorial (Extended)</a></li>
+      <li><a href="/guide-advanced">Rails Girls MY Tutorial (Advanced)</a></li>
+      <li>Deploy To Heroku</li>
+      <li>Credits</li>
+    </ul>
+  </div>
 </div>

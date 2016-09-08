@@ -1,11 +1,18 @@
 ---
+title: Rails Girls MY Tutorial
 layout: default
-permalink: /guide/
+permalink: /guide-extended/
 ---
 
 <div class="home">
   <div class="content">
-    <h1 class="page-heading text-underline">Instagram with Rails</h1>
+    <h1 class="page-heading text-underline">Rails Girls MY Extended App Tutorial</h1>
+
+    <p>
+      <em>Compiled for Rails Girls MY by Faezrah, <a href="https://twitter.com/railsgirlskl">@railsgirlskl</a></em>
+      <br>
+      <em>Based on <a href="https://www.devwalks.com/lets-build-instagram-in-rails-part-1/">Ben Walker's Tutorial</a> from <a href="http://devwalks.com/">DevWalks</a>.</em>
+    </p>
 
     <p>We are going to build our very own Instagram clone.</p>
 
@@ -13,7 +20,7 @@ permalink: /guide/
 
     <p>Alright, let's build it.</p>
 
-    <h3 class="text-underline">1. Creating the Instagram application</h3>
+    <h2 id="creating-the-instagram-clone"><em>1.</em>Creating the Instagram Clone</h2>
 
     <p>Let's call our new project <code>instaclone</code>.</p>
 
@@ -43,13 +50,13 @@ permalink: /guide/
 
     <p>You should now see this friendly Rails default page.</p>
 
-    <img src="../images/rails-page.png" alt="">
+    <img src="../images/tutorials/rails-page.png" alt="">
 
     <p>To stop the server, hit <code>Ctrl + C</code> in the terminal.</p>
 
     <p style="font-weight: bold">Mentor: Explain what each command does. What was generated? What does the server do?</p>
 
-    <h3 class="text-underline">2. Getting Up and Running</h3>
+    <h2 id="getting-up-and-running"><em>2.</em>Getting Up and Running</h2>
 
     <p>In your Instaclone application, you will now create a new resource. A resource is a term used to call a collection of similar objects so users will be able to access via URI and perform CRUD operations.</p>
 
@@ -68,13 +75,13 @@ permalink: /guide/
 
     <p style="font-weight: bold">Mentor: Explain the command, the model name and related database table, naming conventions, attributes and types, etc.) What are migrations and why do you need them?</p>
 
-    <h3 class="text-underline">3. Your First Form</h3>
+    <h2 id="your-first-form"><em>3.</em>Your First Form</h2>
 
     <p>Now that you have everything you need to build an Instagram clone, let's get coding.</p>
 
     <p>Open <code>app/controllers/photos_controller.rb</code>, and you will see something like this:</p>
 
-    {% highlight erb %}
+    {% highlight ruby %}
     class PhotosController < ApplicationController
     end
     {% endhighlight %}
@@ -136,7 +143,7 @@ permalink: /guide/
 
     <p>Your page should now look something like this:</p>
 
-    <img src="../images/photo-form.png" alt="">
+    <img src="../images/tutorials/photo-form.png" alt="">
 
     <p>It looks a little basic, right?</p>
 
@@ -144,7 +151,7 @@ permalink: /guide/
 
     <p style="font-weight: bold;">Mentor: Explain what is CRUD and RESTful resource.</p>
 
-    <h3 class="text-underline">5. Displaying Photos</h3>
+    <h2 id="displaying-photos"><em>4.</em>Displaying Photos</h2>
 
     <p>Before we can test our new photo form, let's add another action in our <code>app/controllers/photos_controller.rb</code>.</p>
 
@@ -162,7 +169,7 @@ permalink: /guide/
 
     {% highlight erb %}
     <%= link_to @photo.file %>
-    <h3><%= @photo.caption %></h1>
+    <h2><%= @photo.caption %></h1>
     {% endhighlight %}
 
     <p>We also need to modify our <code>create</code> action a bit. Add a redirect when your photo is saved, like so:</p>
@@ -184,11 +191,11 @@ permalink: /guide/
 
     <p>Your photo page should look similar to this:</p>
 
-    <img src="../images/photo-show.png" alt="">
+    <img src="../images/tutorials/photo-show.png" alt="">
 
     <p style="font-weight: bold;">Mentor: Do something here...</p>
 
-    <h3 class="text-underline">4. Uploading Photos</h3>
+    <h2 id="uploading-photos"><em>5.</em>Uploading Photos</h2>
 
     <p>So now you can actually create a new caption for a photo, but how to actually upload an image?</p>
 
@@ -254,7 +261,7 @@ permalink: /guide/
 
     <p>If you refresh your browser now, your form should now look something like this:</p>
 
-    <img src="../images/file-field.png" alt="">
+    <img src="../images/tutorials/file-field.png" alt="">
 
     <p>This time we can actually add a new photo. When you upload an image it doesn’t look nice because it only shows a path to the file, so let’s fix that.</p>
 
@@ -270,7 +277,7 @@ permalink: /guide/
 
     <p style="font-weight: bold;">Mentor: </p>
 
-    <h3 class="text-underline">5. Displaying All Photos</h3>
+    <h2 id="displaying-all-photos"><em>6.</em>Displaying All Photos</h2>
 
     <p>Now that we can upload our photos, we need to find a way to show all of our photos.</p>
 
@@ -311,9 +318,9 @@ permalink: /guide/
 
     <p>Your <code>index</code> page should look something like this:</p>
 
-    <img src="../images/index-page.png" alt="" align="center;">
+    <img src="../images/tutorials/index-page.png" alt="" align="center;">
 
-    <h3 class="text-underline">6. Deleting Photos</h3>
+    <h2 id="deleting-photos"><em>7.</em>Deleting Photos</h2>
 
     <p>Just like Instagram, we would like to be able to delete our photos.</p>
 
@@ -340,15 +347,15 @@ permalink: /guide/
 
     <p>Save your file and refresh your browser, you should see a delete link available for the photos, similar to this:</p>
 
-    <img src="../images/photo-delete.png" alt="">
+    <img src="../images/tutorials/photo-delete.png" alt="">
 
     <p>When you click on the delete link, a confirmation dialog box will appear, like this:</p>
 
-    <img src="../images/photo-delete-2.png" alt="">
+    <img src="../images/tutorials/photo-delete-2.png" alt="">
 
     <p>And it’s done! Try deleting one of your photos now and see what happens.</p>
 
-    <h3 class="text-underline">7. Styling</h3>
+    <h2 id="styling"><em>8.</em>Styling</h2>
 
     <p>Now, ehem... It's the moment of truth. Styling!</p>
 
@@ -379,7 +386,7 @@ permalink: /guide/
 
     <p>My <code>application.scss</code> looks like this:</p>
 
-    <img src="../images/application-scss.png" alt="">
+    <img src="../images/tutorials/application-scss.png" alt="">
 
     <p>Next, open <code>application.js</code> in <code>app/assets/javascripts</code>, and add the following:</p>
 
@@ -503,7 +510,6 @@ permalink: /guide/
       padding: 24px 24px;
       font-size: 15px;
       line-height: 18px;
-
     }
 
     .form-wrapper {
@@ -551,7 +557,7 @@ permalink: /guide/
     <p style="font-weight: bold;">Checkpoint: Now, if you refresh your browser, the page should look something like this:
     </p>
 
-    <img src="../images/instaclone-index.png" alt="">
+    <img src="../images/tutorials/instaclone-index.png" alt="">
 
     <p>Much better than before, right?</p>
 
@@ -582,11 +588,11 @@ permalink: /guide/
 
     <p style="font-weight: bold;">Checkpoint: This is how my photo form looks like:</p>
 
-    <img src="../images/instaclone-new.png" alt="">
+    <img src="../images/tutorials/instaclone-new.png" alt="">
 
     <p></p>
 
-    <h3 class="text-underline">8. Tidying up</h3>
+    <h2 id="refine-the-navigation"><em>9.</em>Refine The Navigation</h2>
 
     <p>Now, one last thing. Let's fine tune the route a little bit.</p>
 
@@ -604,9 +610,8 @@ permalink: /guide/
 
     <p>Now, if you go to the main page of your app, you will see the list of your photos.</p>
 
-    <h3 class="text-underline">9. What's Next?</h3>
+    <h2 id="whats-next"><em>10.</em> What's Next?</h2>
     <p>Toodles!</p>
 
   </div>
-  <p class="rss-subscribe">subscribe <a href="{{ "/feed.xml" | prepend: site.baseurl }}">via RSS</a></p>
 </div>
