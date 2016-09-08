@@ -127,6 +127,16 @@ footer a {
   border-color: #111;
 }
 
+img {
+  padding-bottom: 10px;
+  display: block;
+  margin: 0 auto;
+}
+
+.home {
+  padding-bottom: 25px;
+}
+
 /*.indent {
   margin-left: 70px;
 }
@@ -205,7 +215,7 @@ footer a {
 .hero {
   padding: 20px 320px 20px 0;
   background: url(../images/guides-hero.png) right 80px no-repeat;
-}
+}*/
 
 i.icon-text-editor, i.icon-prompt, i.icon-browser {
   background-position: 0 0;
@@ -218,94 +228,13 @@ i.icon-text-editor, i.icon-prompt, i.icon-browser {
 }
 
 i.icon-text-editor {
-  background-image: url("/images/icon-text-editor.png");
+  background-image: url("/images/icons/icon-text-editor.png");
 }
 
 i.icon-prompt{
-  background-image: url("/images/icon-prompt.png");
+  background-image: url("/images/icons/icon-prompt.png");
 }
 
 i.icon-browser {
-  background-image: url("/images/icon-browser.png");
+  background-image: url("/images/icons/icon-browser.png");
 }
-
-/* The code lines are quite long.
-Mobilize a lot of horizontal space for small screens: */
-@media (max-width: 1200px) {
-  figure.highlight {
-    margin: 0pt 0pt 15pt 0pt;
-  }
-}
-@media(min-width: 1200px) {
-  figure.highlight {
-    margin: 0pt 40pt 25pt 0pt;
-  }
-}
-
-i.icon-small-text-editor, i.icon-small-prompt, i.icon-small-browser {
-  background-position: 0 0;
-  margin-left: 0px;
-  margin-top: 15px;
-  display: block;
-  width: 50px;
-  height: 20px;
-  line-height: 20px;
-}
-i.icon-small-text-editor {
-  background-image: url("/images/icon-small-text-editor.png");
-}
-i.icon-small-prompt{
-  background-image: url("/images/icon-small-prompt.png");
-}
-i.icon-small-browser {
-  background-image: url("/images/icon-small-browser.png");
-}
-
-.os-specific {
-  margin-bottom: 4em;
-}
-
-.os-specific .picker {
-  display: block;
-  float: right;
-}
-
-.os-specific .active {
-  font-weight: bold;
-}
-
-/* Correct padding on smaller screens */
-@media (max-width: 767px) {
-  header, footer{
-    margin-left:-20px;
-    margin-right:-20px;
-    padding-left:20px;
-    padding-right:20px;
-  }
-}
-
-/* Don't show the homepage image on mobile */
-@media (max-width: 480px) {
-  .hero {
-    padding: 20px 0;
-    background:none;
-  }
-}
-
-kbd {
-  padding: .1em .6em;
-  border: 1px solid #ccc;
-  font-size: 11px;
-  font-family: Arial,Helvetica,sans-serif;
-  background-color: #f7f7f7;
-  color: #333;
-  -moz-box-shadow: 0 1px 0 rgba(0,0,0,0.2),0 0 0 2px #fff inset;
-  -webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.2),0 0 0 2px #fff inset;
-  box-shadow: 0 1px 0 rgba(0,0,0,0.2),0 0 0 2px #fff inset;
-  border-radius: 3px;
-  display: inline-block;
-  margin: 0 .1em;
-  text-shadow: 0 1px 0 #fff;
-  line-height: 1.5em;
-  white-space: nowrap;
-}*/
