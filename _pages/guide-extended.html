@@ -9,9 +9,11 @@ permalink: /guide-extended/
     <h1 class="page-heading text-underline">Rails Girls MY Extended App Tutorial</h1>
 
     <p>
+      <em>Created by Vesa Vänskä, <a href="https://twitter.com/vesan">@vesan</a></em>
+      <br>
       <em>Compiled for Rails Girls MY by Faezrah, <a href="https://twitter.com/railsgirlskl">@railsgirlskl</a></em>
       <br>
-      <em>Based on <a href="https://www.devwalks.com/lets-build-instagram-in-rails-part-1/">Ben Walker's Tutorial</a> from <a href="http://devwalks.com/">DevWalks</a>.</em>
+      <em>Credits to Ben Walker for the CSS styling.</em>
     </p>
 
     <p>We are going to build our very own Instagram clone.</p>
@@ -24,7 +26,7 @@ permalink: /guide-extended/
 
     <p>Let's call our new project <code>instaclone</code>.</p>
 
-    <p>To create a new project in Rails, run this command in the terminal/console.</p>
+    <p>To create a new project in Rails, run this command in the terminal.</p>
 
     {% highlight sh %}$ rails new instaclone {% endhighlight %}
 
@@ -36,7 +38,7 @@ permalink: /guide-extended/
 
     <p>The instaclone folder has a number of auto-generated files and folders that make up the structure of a Rails application. Most of the work in this tutorial will happen in the <code>app</code> sub-folder.</p>
 
-    <p>To see what other files Rails has generated for you, type this command in the console/terminal:</p>
+    <p>To see what other files Rails has generated for you, type this command in the terminal:</p>
 
     {% highlight sh %}$ ls {% endhighlight %}
 
@@ -62,7 +64,7 @@ permalink: /guide-extended/
 
     <p>For example, we want to have a collection of photos in our application.</p>
 
-    <p>Go ahead and run this in the console/terminal:</p>
+    <p>Go ahead and run this in the terminal:</p>
 
     {% highlight sh %}$ bin/rails generate resource photo file:string caption:string {% endhighlight %}
 
@@ -73,7 +75,7 @@ permalink: /guide-extended/
     {% highlight sh %}$ bin/rails db:migrate {% endhighlight %}
     {% highlight sh %}$ bin/rails server {% endhighlight %}
 
-    <p style="font-weight: bold">Mentor: Explain the command, the model name and related database table, naming conventions, attributes and types, etc.) What are migrations and why do you need them?</p>
+    <p style="font-weight: bold">Mentor: Explain the command, the model name and related database table, naming conventions, attributes and types, etc. What are migrations and why do you need them?</p>
 
     <h2 id="your-first-form"><em>3.</em>Your First Form</h2>
 
@@ -149,7 +151,7 @@ permalink: /guide-extended/
 
     <p>That's okay, let's focus on building our main feature before we move on to styling the application.</p>
 
-    <p style="font-weight: bold;">Mentor: Explain what is CRUD and RESTful resource.</p>
+    <p style="font-weight: bold;">Mentor: Explain what is a controller, the C in MVC in Rails.</p>
 
     <h2 id="displaying-photos"><em>4.</em>Displaying Photos</h2>
 
@@ -193,7 +195,7 @@ permalink: /guide-extended/
 
     <img src="../images/tutorials/photo-show.png" alt="" class="img-responsive">
 
-    <p style="font-weight: bold;">Mentor: Do something here...</p>
+    <p style="font-weight: bold;">Mentor: Talk a little about CRUD operations and RESTful resources.</p>
 
     <h2 id="uploading-photos"><em>5.</em>Uploading Photos</h2>
 
@@ -211,17 +213,17 @@ permalink: /guide-extended/
 
     <p>Every time you add a new gem, you need to run a command to install it to your application.</p>
 
-    <p>So, in the console/terminal, run:</p>
+    <p>So, in the terminal, run:</p>
 
     {% highlight sh %}$ bundle install {% endhighlight %}
-
-    <p style="font-weight: bold">Mentor: Explain what libraries are and why they are useful. Describe what open source software is.</p>
 
     <p>At this point you might need to restart the Rails server process in the terminal.</p>
 
     <p>Note: Some people might be using a second terminal to run the rails server continuously. If so you need to restart the Rails server process now. This is needed for the app to load the added library.</p>
 
     <p>Go to the terminal tab which runs the server and then hit <code>CTRL + C</code> to quit the server. Once it has stopped, you can press the up arrow to get to the last command entered, then hit enter to start the server again.</p>
+
+    <p style="font-weight: bold">Mentor: Explain what libraries are and why they are useful. Describe what open source software is.</p>
 
     <p>Now that we have installed the gem, we can generate the code for handling uploads.</p>
 
@@ -275,7 +277,7 @@ permalink: /guide-extended/
 
     <p>Now refresh your browser to see what changed.</p>
 
-    <p style="font-weight: bold;">Mentor: </p>
+    <p style="font-weight: bold;"></p>
 
     <h2 id="displaying-all-photos"><em>6.</em>Displaying All Photos</h2>
 
@@ -287,7 +289,7 @@ permalink: /guide-extended/
 
     {% highlight erb %} class PhotosController < ApplicationController {% endhighlight %}
 
-    <p>And before the <code>new</code> action, add this code:</p>
+    <p>And before the <code>new</code> action, type the code:</p>
 
     {% highlight erb %}
       def index
@@ -295,7 +297,7 @@ permalink: /guide-extended/
       end
     {% endhighlight %}
 
-    <p>Next, create a new file called <code>index.html.erb</code> inside <code>apps/views/photos</code> and type this code:</p>
+    <p>Next, create a new file called <code>index.html.erb</code> inside <code>apps/views/photos</code> and terminal:</p>
 
     {% highlight erb %}
       <h1>All Photos</h1>
@@ -320,15 +322,17 @@ permalink: /guide-extended/
 
     <img src="../images/tutorials/index-page.png" alt="" class="img-responsive">
 
+    <p style="font-weight: bold;">Mentor: Talk a little the relationship between HTML and Rails. What part of views is HTML and what is Embedded Ruby (ERB)?</p>
+
     <h2 id="deleting-photos"><em>7.</em>Deleting Photos</h2>
 
     <p>Just like Instagram, we would like to be able to delete our photos.</p>
 
     <p>Deleting is super simple and can be fleshed out nice and quickly. </p>
 
-    <p>Let's first create a <code>destroy</code> method in the controller that deletes the specific record. We then need to provide a link to that action in our index view.</p>
+    <p>Let's first create a <code>destroy</code> action in the controller that deletes the specific record. We then need to provide a link to that action in our index view.</p>
 
-    <p>So, in our <code>photos_controller.rb</code>, just below the <code>show</code> action, add as follows:</p>
+    <p>So, in our <code>photos_controller.rb</code>, just below the <code>show</code> action, type as follows:</p>
 
     {% highlight erb %}
       def destroy
@@ -610,8 +614,13 @@ permalink: /guide-extended/
 
     <p>Now, if you go to the main page of your app, you will see the list of your photos.</p>
 
-    <h2 id="whats-next"><em>10.</em> What's Next?</h2>
-    <p>Toodles!</p>
-
+    <h2 id="whats-next"><em>10.</em> What Next?</h2>
+    <p>If you're feeling adventurous:</p>
+    <ul>
+      <li>Add user registration to your app.</li>
+      <li>Add comment to your photos.</li>
+      <li>Display your app to Heroku.</li>
+    </ul>
+    <p>Go to our <a href="/guide-advanced">Extended Guide Part #2.</a></p>
   </div>
 </div>
