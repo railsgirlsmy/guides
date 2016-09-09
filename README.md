@@ -1,3 +1,7 @@
-## Instagram with Rails
+## Rails Girls MY
 
-Tutorial how to build an Instagram clone with Rails for Rails Girls Kuching.
+- Getting Started With Rails
+- Your First Rails App (Scaffold)
+- Your First Rails App (Extended)
+- Add User Authentication With Devise
+- Add Comments To Your App

@@ -1,12 +1,12 @@
 ---
-title: Rails Girls MY Tutorial
+title: RGMY Guides
 layout: default
 permalink: /guide-extended/
 ---
 
 <div class="home">
   <div class="content">
-    <h1 class="page-heading text-underline">Rails Girls MY Extended App Tutorial</h1>
+    <h1 class="page-heading">Rails Girls MY App Guide (Extended)</h1>
 
     <p>
       <em>Created by Vesa Vänskä, <a href="https://twitter.com/vesan">@vesan</a></em>
@@ -30,7 +30,7 @@ permalink: /guide-extended/
 
     {% highlight sh %}$ rails new instaclone {% endhighlight %}
 
-    <p>This will create a new Rails application called instaclone in a instaclone folder and install the gem dependencies that are already mentioned in Gemfile using bundle install.</p>
+    <p>This will create a new Rails application called instaclone folder and install the gem dependencies that are already mentioned in Gemfile using bundle install.</p>
 
     <p>Now switch to your new folder.</p>
 
@@ -119,7 +119,7 @@ permalink: /guide-extended/
 
     <p>Now, go to <code>app/views/photos/</code> and create a new form file called <code>new.html.erb</code>.</p>
 
-    <p>Add the following code:</p>
+    <p>Type the following code:</p>
 
     {% highlight erb %}
     <%= form_for @photo do |f| %>
@@ -167,7 +167,7 @@ permalink: /guide-extended/
 
     <p>Next, create a show file in <code>app/views/photos</code> and call it <code>show.html.erb</code>.</p>
 
-    <p>In your <code>show.html.erb</code>, add the following code:</p>
+    <p>In your <code>show.html.erb</code>, Type the following code:</p>
 
     {% highlight erb %}
     <%= link_to @photo.file %>
@@ -199,13 +199,13 @@ permalink: /guide-extended/
 
     <h2 id="uploading-photos"><em>5.</em>Uploading Photos</h2>
 
-    <p>So now you can actually create a new caption for a photo, but how to actually upload an image?</p>
+    <p>Now you can actually create a new caption for a photo, but how to actually upload an image?</p>
 
     <p>We need to install a piece of software to let us upload files in Rails.</p>
 
     <p>Open <code>Gemfile</code> in the project directory using your text editor and under the line:</p>
 
-    <p><code># gem 'capistrano-rails', group: :development</code></p>
+    {% highlight erb %} # gem 'capistrano-rails', group: :development {% endhighlight %}
 
     <p>Add this line:</p>
 
@@ -283,7 +283,7 @@ permalink: /guide-extended/
 
     <p>Now that we can upload our photos, we need to find a way to show all of our photos.</p>
 
-    <p>To do this, we need to create an <code>index</code> action in our <code>app/controllers/photos_controller.rb</code>.</p>
+    <p>To do this, create an <code>index</code> action in our <code>app/controllers/photos_controller.rb</code>.</p>
 
     <p>Below this line:</p>
 
@@ -297,7 +297,7 @@ permalink: /guide-extended/
       end
     {% endhighlight %}
 
-    <p>Next, create a new file called <code>index.html.erb</code> inside <code>apps/views/photos</code> and terminal:</p>
+    <p>Next, create a new file called <code>index.html.erb</code> inside <code>apps/views/photos</code> and type the following:</p>
 
     {% highlight erb %}
       <h1>All Photos</h1>
@@ -326,9 +326,7 @@ permalink: /guide-extended/
 
     <h2 id="deleting-photos"><em>7.</em>Deleting Photos</h2>
 
-    <p>Just like Instagram, we would like to be able to delete our photos.</p>
-
-    <p>Deleting is super simple and can be fleshed out nice and quickly. </p>
+    <p>Just like Instagram, we would like to be able to delete our photos. Deleting is super simple and can be fleshed out nice and quickly. </p>
 
     <p>Let's first create a <code>destroy</code> action in the controller that deletes the specific record. We then need to provide a link to that action in our index view.</p>
 
@@ -535,24 +533,24 @@ permalink: /guide-extended/
 
     {% highlight erb %}
     <% if @photos.any? %>
-    <div class="photos-wrapper row">
-      <% @photos.each do |photo| %>
-        <div class="photo">
-          <div class="photo-head">
-            <h4 class="name">
-              RG Kuching
-            </h4>
+      <div class="photos-wrapper row">
+        <% @photos.each do |photo| %>
+          <div class="photo">
+            <div class="photo-head">
+              <h4 class="name">
+                RG Kuching
+              </h4>
+            </div>
+            <div class="image center-block">
+              <%= image_tag(photo.file_url, class: "img-responsive") if photo.file.present? %>
+            </div>
+            <p class="caption">
+              <%= photo.caption %>
+              <%= link_to "Delete", photo_path(photo), method: :delete, data: { confirm: "Are you sure you want to delete this photo?" }, class: "btn btn-danger btn-xs" %>
+            </p>
           </div>
-          <div class="image center-block">
-            <%= image_tag(photo.file_url, class: "img-responsive") if photo.file.present? %>
-          </div>
-          <p class="caption">
-            <%= photo.caption %>
-            <%= link_to "Delete", photo_path(photo), method: :delete, data: { confirm: "Are you sure you want to delete this photo?" }, class: "btn btn-danger btn-xs" %>
-          </p>
-        </div>
-      <% end  %>
-    </div>
+        <% end  %>
+      </div>
     <% else  %>
       <p>No photos found.</p>
     <% end %>
@@ -614,10 +612,10 @@ permalink: /guide-extended/
 
     <p>Now, if you go to the main page of your app, you will see the list of your photos.</p>
 
-    <h2 id="whats-next"><em>10.</em> What Next?</h2>
+    <h2 id="whats-next"><em>10.</em> What's Next?</h2>
     <p>If you're feeling adventurous:</p>
     <ul>
-      <li>Add user registration to your app.</li>
+      <li>Add user registration on your app.</li>
       <li>Add comment to your photos.</li>
       <li>Display your app to Heroku.</li>
     </ul>

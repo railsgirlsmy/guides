@@ -1,12 +1,12 @@
 ---
-title: Rails Girls MY Tutorial
+title: RGMY Guides
 layout: default
-permalink: /guide-advanced/
+permalink: /guide-devise/
 ---
 
 <div class="home">
   <div class="content">
-    <h1 class="page-heading text-underline">Rails Girls MY Advanced App Tutorial</h1>
+    <h1 class="page-heading text-underline">Add User Authentication With Devise</h1>
 
     <p>
       <em>Created by Piotr Steininger, @polishprince.</em>
@@ -14,7 +14,7 @@ permalink: /guide-advanced/
       <em>Compiled for Rails Girls MY by Faezrah, <a href="https://twitter.com/railsgirlskl">@railsgirlskl</a></em>
     </p>
 
-    <h4>This guide assumes that you have already built a Rails Girls app by following <a href="/guide-extended/">the extended app tutorial</a>.</h4>
+    <h4>This guide assumes that you have already built a Rails Girls app by following <a href="/guide-extended/">the extended app guide</a>.</h4>
 
     <h2 id="add-basic-user-authentication"><em>1.</em>Add Basic User Authentication</h2>
 
@@ -67,6 +67,8 @@ permalink: /guide-advanced/
 
     {% highlight erb %}<%= yield %>{% endhighlight %}
 
+    <p>This code will display alerts and notices for our application, to slightly improve user experience.</p>
+
     <p style="font-weight: bold;">Mentor: Talk a little bit about user authentication and Devise.</p>
 
     <h2 id="setup-user-model"><em>4.</em>Setup User Model</h2>
@@ -95,7 +97,7 @@ permalink: /guide-advanced/
 
     <p>All you need to do now is to add appropriate links or notice about the user being logged in in the top right corner of the navigation bar.</p>
 
-    <p>In order to do that, edit <code>app/views/layouts/application.html.erb</code> type:</p>
+    <p>In order to do that, open <code>app/views/layouts/application.html.erb</code> and type:</p>
 
     {% highlight erb %}
     <% if user_signed_in? %>
@@ -164,6 +166,8 @@ permalink: /guide-advanced/
 
     {% highlight erb %} mount_uploader :file, PhotoUploader {% endhighlight %}
 
+    <p>We do this because we need to explicitly tell Rails about the associations between the two models, otherwise Rails will return an error.</p>
+
     <p>Lastly, in <code>app/controllers/photo_controller.rb</code> replace this code:</p>
 
     {% highlight erb %} @photo = Photos.new(photo_params) {% endhighlight %}
@@ -171,6 +175,8 @@ permalink: /guide-advanced/
     <p>With:</p>
 
     {% highlight erb %} @photo = current_user.photos.new(photo_params) {% endhighlight %}
+
+    <p>This code basically means we want to tie the photo with the current user logged-in.</p>
 
     <p>Now we have the association setup between the two, play around the app to test if it works.</p>
 
@@ -187,5 +193,7 @@ permalink: /guide-advanced/
     <h2 id="adding-more-features"><em>8.</em>Adding More Features</h2>
 
     <p>You now have a basic instagram clone application. Next, you can enhance your app by adding comment to photos.</p>
+
+    <p>Go to our <a href="/guide-advanced">Extended Guide Part #2.</a></p>
   </div>
 </div>
