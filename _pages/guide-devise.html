@@ -184,7 +184,7 @@ permalink: /guide-devise/
 
     {% highlight erb %}
     <h4 class="name">
-      <%= photo.user.email %>
+      <%= photo.user ? photo.user.email : "RG Kuching" %>
     </h4>
     {% endhighlight %}
 
