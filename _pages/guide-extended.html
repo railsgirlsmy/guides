@@ -46,7 +46,7 @@ permalink: /guide-extended/
 
     <p>To do this, we need to run the server by typing this command:</p>
 
-    {% highlight sh %}$ bin/rails server {% endhighlight %}
+    {% highlight sh %}$ bin/rails server -b 0.0.0.0 {% endhighlight %}
 
     <p>To see your application in action, open a browser window and navigate to: <code>http://localhost:3000/</code></p>
 
@@ -72,8 +72,8 @@ permalink: /guide-extended/
 
     <p>But to get it to work properly we need to run a couple of other commands to update our database and restart the server.</p>
 
-    {% highlight sh %}$ bin/rails db:migrate {% endhighlight %}
-    {% highlight sh %}$ bin/rails server {% endhighlight %}
+    {% highlight sh %}$ bin/rake db:migrate {% endhighlight %}
+    {% highlight sh %}$ bin/rails server -b 0.0.0.0 {% endhighlight %}
 
     <p style="font-weight: bold">Mentor: Explain the command, the model name and related database table, naming conventions, attributes and types, etc. What are migrations and why do you need them?</p>
 
