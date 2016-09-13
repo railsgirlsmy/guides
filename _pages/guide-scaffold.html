@@ -4,422 +4,418 @@ layout: default
 permalink: /guide-scaffold/
 ---
 
-<div class="home">
-  <div class="content">
-    <h1 id="rails-girls-app-tutorial">Rails Girls MY App Guide</h1>
+<h2 id="rails-girls-app-tutorial">Rails Girls MY App Guide (Scaffold)</h2>
 
-    <p>
-      <em>Created by Vesa Vänskä, <a href="https://twitter.com/vesan">@vesan</a></em>
-      <br>
-      <em>Compiled for RailsGirlsKL by Faezrah, <a href="https://twitter.com/railsgirlskl">@railsgirlskl</a></em>
-      <br>
-      <em>Previous contributors: Josh Teng <a href="https://twitter.com/joshZteng">@joshZteng</a>, Wunmin <a href="https://twitter.com/ubikentang">@ubikentang</a>, Nguyen</em>
-    </p>
+<p>
+  <em>Created by Vesa Vänskä, <a href="https://twitter.com/vesan">@vesan</a></em>
+  <br>
+  <em>Compiled for RailsGirlsKL by Faezrah, <a href="https://twitter.com/railsgirlskl">@railsgirlskl</a></em>
+  <br>
+  <em>Previous contributors: Josh Teng <a href="https://twitter.com/joshZteng">@joshZteng</a>, Wunmin <a href="https://twitter.com/ubikentang">@ubikentang</a>, Nguyen</em>
+</p>
 
-    <h2 id="get-to-know-the-tools">Get to know the tools</h2>
+<h2 id="get-to-know-the-tools">Get to know the tools</h2>
 
-    <div class="indent">
-      <h3><i class="icon-browser">&nbsp;</i></h3>
-      <h3 id="web-browser">Web browser</h3>
-      <ul>
-        <li>(Firefox, Safari, Chrome) for viewing your application.</li>
-      </ul>
+<div class="indent">
+  <h3><i class="icon-browser">&nbsp;</i></h3>
+  <h3 id="web-browser">Web browser</h3>
+  <ul>
+    <li>(Firefox, Safari, Chrome) for viewing your application.</li>
+  </ul>
 
-      <h3><i class="icon-browser">&nbsp;</i></h3>
-      <h3 id="web-browser">Cloud9</h3>
-      <ul>
-        <li><a href="http://c9.io">Cloud9</a> is a cloud-based development environment where we can write and run the code. It works in the browser.</li>
-      </ul>
+  <h3><i class="icon-browser">&nbsp;</i></h3>
+  <h3 id="web-browser">Cloud9</h3>
+  <ul>
+    <li><a href="http://c9.io">Cloud9</a> is a cloud-based development environment where we can write and run the code. It works in the browser.</li>
+  </ul>
+</div>
+
+<h2 id="creating-the-application"><em>1.</em>Creating the application</h2>
+
+<p>We’re going to create a new Rails application, and it's going to be a photo gallery.</p>
+
+<p>Hope you already followed the quick setup guide for c9. Then open your new railsgirls workspace in c9.</p>
+
+<p>Next, type these commands in the terminal:</p>
+
+{% highlight sh %}$ ls {% endhighlight %}
+
+<p>You should see folders such as <code>app</code> and <code>config</code>. You can then start the rails server by running:</p>
+
+{% highlight sh %}$ bin/rails server -b $IP -p $PORT {% endhighlight %}
+
+<p>Notice now in the terminal, the command prompt is not visible. The command prompt looks like this:</p>
+
+{% highlight sh %}username:~/workspace ${% endhighlight %}
+
+<p>This is because you are now in the Rails server in that terminal tab.</p>
+
+<p>When the command prompt is not visible you cannot execute new commands. If you try running <code>cd</code> or another command it will not work. To return to the normal command prompt, hit <code>CTRL</code>+<code>C</code> in the terminal to quit the server.</p>
+
+<p>If you want to run other commands, simply open another terminal tab by clicking <code><strong>+</strong></code> sign next to current terminal tab.</p>
+
+<p><strong>Tip</strong>: You can keep two terminal tabs open. One for running the server and other to run all the commands.</p>
+
+<p>Preview your new app by clicking on the URL that appears in the terminal tab. Your URL should look something like this:</p>
+
+{% highlight sh %}https://yourworkspacename-yourusername.c9users.io/{% endhighlight %}
+
+<p>You should see “Welcome aboard” page, which means that the generation of your new app worked correctly.</p>
+
+<p><strong>Mentor: Explain what each command does. What was generated? What does the server do?</strong></p>
+
+<h2 id="create-idea-scaffold"><em>2.</em>Create Photo scaffold</h2>
+
+<p>We’re going to use Rails’ scaffold functionality to generate a starting point that allows us to list, add, remove, edit, and view things; in our case photos.</p>
+
+<p><strong>Mentor: What is Rails scaffolding? (Explain the command, the model name and related database table, naming conventions, attributes and types, etc.) What are migrations and why do you need them?</strong></p>
+
+{% highlight sh %}$ bin/rails generate scaffold photo description:text file:string {% endhighlight %}
+
+<p>The scaffold creates new files in your project directory, but to get it to work properly we need to run a couple of other commands to update our database and restart the server.</p>
+
+{% highlight sh %}
+$ bin/rake db:migrate
+$ bin/rails server -b $IP -p $PORT
+{% endhighlight %}
+
+<p>Then preview in the browser, you should append <code>/photos</code> to the URL shown in the address bar of your browser.</p>
+
+<p>You should see an empty page with the title “Listing photos”. At the bottom you will see a link to add a “New Photo”.</p>
+
+<p>Play around with this a little. We got all these when we ran those scaffold commands earlier.</p>
+
+<h2 id="design"><em>3.</em>Design</h2>
+
+<p><strong>Mentor: Talk about the relationship between HTML and Rails. What part of views is HTML and what is Embedded Ruby (ERB)? What is MVC and how does this relate to it? (Models and controllers are responsible for generating the HTML views.)</strong></p>
+
+<p>The app doesn’t look very nice yet. Let’s do something about that. We’ll use Bootstrap to give us nicer styling really easily.</p>
+
+<p>In c9, use the file browser to open <code>app/views/layouts/application.html.erb</code>.</p>
+
+<p>Above the line:</p>
+
+{% highlight erb %}
+<%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
+{% endhighlight %}
+
+<p>Add:</p>
+
+{% highlight html %}
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+{% endhighlight %}
+
+<p>Then replace:</p>
+
+{% highlight erb %}
+<%= yield %>
+{% endhighlight %}
+
+<p>With:</p>
+
+{% highlight erb %}
+<div class="container">
+  <%= yield %>
+</div>
+{% endhighlight %}
+
+<p>Let’s also add a navigation bar and footer to the layout. In the same file, under <code class="highlighter-rouge">&lt;body&gt;</code> add:</p>
+
+{% highlight html %}
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">The Photo App</a>
     </div>
-
-    <h2 id="creating-the-application"><em>1.</em>Creating the application</h2>
-
-    <p>We’re going to create a new Rails application, and it's going to be a photo gallery.</p>
-
-    <p>Hope you already followed the quick setup guide for c9. Then open your new railsgirls workspace in c9.</p>
-
-    <p>Next, type these commands in the terminal:</p>
-
-    {% highlight sh %}$ ls {% endhighlight %}
-
-    <p>You should see folders such as <code>app</code> and <code>config</code>. You can then start the rails server by running:</p>
-
-    {% highlight sh %}$ bin/rails server -b $IP -p $PORT {% endhighlight %}
-
-    <p>Notice now in the terminal, the command prompt is not visible. The command prompt looks like this:</p>
-
-    {% highlight sh %}username:~/workspace ${% endhighlight %}
-
-    <p>This is because you are now in the Rails server in that terminal tab.</p>
-
-    <p>When the command prompt is not visible you cannot execute new commands. If you try running <code>cd</code> or another command it will not work. To return to the normal command prompt, hit <code>CTRL</code>+<code>C</code> in the terminal to quit the server.</p>
-
-    <p>If you want to run other commands, simply open another terminal tab by clicking <code><strong>+</strong></code> sign next to current terminal tab.</p>
-
-    <p><strong>Tip</strong>: You can keep two terminal tabs open. One for running the server and other to run all the commands.</p>
-
-    <p>Preview your new app by clicking on the URL that appears in the terminal tab. Your URL should look something like this:</p>
-
-    {% highlight sh %}https://yourworkspacename-yourusername.c9users.io/{% endhighlight %}
-
-    <p>You should see “Welcome aboard” page, which means that the generation of your new app worked correctly.</p>
-
-    <p><strong>Mentor: Explain what each command does. What was generated? What does the server do?</strong></p>
-
-    <h2 id="create-idea-scaffold"><em>2.</em>Create Photo scaffold</h2>
-
-    <p>We’re going to use Rails’ scaffold functionality to generate a starting point that allows us to list, add, remove, edit, and view things; in our case photos.</p>
-
-    <p><strong>Mentor: What is Rails scaffolding? (Explain the command, the model name and related database table, naming conventions, attributes and types, etc.) What are migrations and why do you need them?</strong></p>
-
-    {% highlight sh %}$ bin/rails generate scaffold photo description:text file:string {% endhighlight %}
-
-    <p>The scaffold creates new files in your project directory, but to get it to work properly we need to run a couple of other commands to update our database and restart the server.</p>
-
-    {% highlight sh %}
-    $ bin/rake db:migrate
-    $ bin/rails server -b $IP -p $PORT
-    {% endhighlight %}
-
-    <p>Then preview in the browser, you should append <code>/photos</code> to the URL shown in the address bar of your browser.</p>
-
-    <p>You should see an empty page with the title “Listing photos”. At the bottom you will see a link to add a “New Photo”.</p>
-
-    <p>Play around with this a little. We got all these when we ran those scaffold commands earlier.</p>
-
-    <h2 id="design"><em>3.</em>Design</h2>
-
-    <p><strong>Mentor: Talk about the relationship between HTML and Rails. What part of views is HTML and what is Embedded Ruby (ERB)? What is MVC and how does this relate to it? (Models and controllers are responsible for generating the HTML views.)</strong></p>
-
-    <p>The app doesn’t look very nice yet. Let’s do something about that. We’ll use Bootstrap to give us nicer styling really easily.</p>
-
-    <p>In c9, use the file browser to open <code>app/views/layouts/application.html.erb</code>.</p>
-
-    <p>Above the line:</p>
-
-    {% highlight erb %}
-    <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
-    {% endhighlight %}
-
-    <p>Add:</p>
-
-    {% highlight html %}
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    {% endhighlight %}
-
-    <p>Then replace:</p>
-
-    {% highlight erb %}
-    <%= yield %>
-    {% endhighlight %}
-
-    <p>With:</p>
-
-    {% highlight erb %}
-    <div class="container">
-      <%= yield %>
-    </div>
-    {% endhighlight %}
-
-    <p>Let’s also add a navigation bar and footer to the layout. In the same file, under <code class="highlighter-rouge">&lt;body&gt;</code> add:</p>
-
-    {% highlight html %}
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/">The Photo App</a>
-        </div>
-        <div class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><%= link_to 'Photos', photos_path %></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-    {% endhighlight %}
-
-    <p>And before <code class="highlighter-rouge">&lt;/body&gt;</code> add:</p>
-
-    {% highlight html %}
-    <footer class="footer">
-      <div class="container">
-        <p class="text-muted">RailsGirls KL 2016</p>
-      </div>
-    </footer>
-    {% endhighlight %}
-
-    <p>Don't forget to save your work everytime you make changes.</p>
-
-    <p>Now let’s also change the styling of the photos table. Open <code class="highlighter-rouge">app/assets/stylesheets/application.css</code> and at the bottom add:</p>
-
-    {% highlight css %}
-    body { padding-top: 100px; }
-    footer { margin-top: 100px; }
-    table, td, th { vertical-align: middle; border: none; }
-    th { border-bottom: 1px solid #DDD; }
-    {% endhighlight %}
-
-    <p>Finally, delete the file <code class="highlighter-rouge">app/assets/stylesheets/scaffolds.css</code> because we don’t really need the default style generated by Rails.</p>
-
-    <p>Now make sure you saved your files and refresh the browser tab previewing your app to see what was changed. You can also change the HTML &amp; CSS further.</p>
-
-    <p><strong>Mentor: Talk a little about CSS and layouts.</strong></p>
-
-    <h2 id="refine-the-navigation"><em>4.</em>Refine the navigation</h2>
-
-    <p>Considering “photo” is the most important object in your app, we are going to put the “Add Photo” button on the navigation bar to make it always available.</p>
-
-    <p>Open <code>app/views/layouts/application.html.erb</code>, under the line:</p>
-
-    {% highlight erb %}
-    <li class="active"><%= link_to 'Photos', photos_path %></li>
-    {% endhighlight %}
-
-    <p>Add:</p>
-
-    {% highlight erb %}
-    <li><%= link_to 'Add Photo', new_photo_path %></li>
-    {% endhighlight %}
-
-    <h2 id="adding-picture-uploads"><em>5.</em>Adding picture uploads</h2>
-
-    <p>We need to install a piece of software to let us upload files in Rails.</p>
-
-    <p>Open <code>Gemfile</code> in the project directory using your text editor and under the line</p>
-
-    {% highlight ruby %}
-    gem 'sqlite3'
-    {% endhighlight %}
-
-    <p>Add:</p>
-
-    {% highlight ruby %}
-    gem 'carrierwave'
-    {% endhighlight %}
-
-    <p><strong>Mentor: Explain what libraries are and why they are useful. Describe what open source software is.</strong></p>
-
-    <p>Hit <code>CTRL</code>+<code>C</code> in the terminal to quit the server.</p>
-
-    <p>In the terminal run:</p>
-
-    {% highlight sh %}$ bundle install {% endhighlight %}
-
-    <p>Now we can generate the code for handling uploads. In the terminal run:</p>
-
-    {% highlight sh %}$ bin/rails generate uploader Picture {% endhighlight %}
-
-    <p>At this point you need to restart the Rails server process in the terminal.</p>
-
-    <p>Note: Some people might be using a second terminal to run the rails server continuously. If so you need to restart the Rails server process now. This is needed for the app to load the added library.</p>
-
-    <p>Go to the terminal tab which runs the server and then hit <code>CTRL</code>+<code>C</code> to quit the server. Once it has stopped, you can press the up arrow to get to the last command entered, then hit enter to start the server again.</p>
-
-    <p>Open <code>app/models/photo.rb</code> and under the line:</p>
-
-    {% highlight ruby %}
-    class Photo < ActiveRecord::Base
-    {% endhighlight %}
-
-    <p>Add:</p>
-
-    {% highlight ruby %}
-    mount_uploader :file, PictureUploader
-    {% endhighlight %}
-
-    <p>Open <code>app/views/photos/_form.html.erb</code> and change:</p>
-
-    {% highlight erb %}
-    <%= f.text_field :file %>
-    {% endhighlight %}
-
-    <p>To:</p>
-
-    {% highlight erb %}
-    <%= f.file_field :file %>
-    {% endhighlight %}
-
-    <p>Sometimes, you might get an <em>TypeError: can’t cast ActionDispatch::Http::UploadedFile to string.</em></p>
-
-    <p>If this happens, in file <code>app/views/photos/_form.html.erb</code> change the line:</p>
-
-    {% highlight erb %}
-    <%= form_for(@photo) do |f| %>
-    {% endhighlight %}
-
-    <p>To:</p>
-
-    {% highlight erb %}
-    <%= form_for @photo, html: {multipart: true} do |f| %>
-    {% endhighlight %}
-
-    <p>In your browser, again click on the New Photo link. This time we can actually add a new photo. When you upload an image it doesn’t look nice because it only shows a path to the file, so let’s fix that.</p>
-
-    <p>Open <code>app/views/photos/show.html.erb</code> and change:</p>
-
-    {% highlight erb %}
-    <%= @photo.file %>
-    {% endhighlight %}
-
-    <p>To:</p>
-
-    {% highlight erb %}
-    <%= image_tag(@photo.file_url, width: 600) if @photo.file.present? %>
-    {% endhighlight %}
-
-    <p>Now refresh your browser to see what changed.</p>
-
-    <p><strong>Mentor: Talk a little about HTML.</strong></p>
-
-    <h2 id="design-the-photo-upload-form"><em>6.</em>Design the photo upload form</h2>
-
-    <p>Now that you have an upload form that works, let’s make it look nice with the help of Bootstrap.</p>
-
-    <p>Open <code>app/views/photos/_form.html.erb</code>, where you see:</p>
-
-    {% highlight html %}
-    <div class="field">
-    {% endhighlight %}
-
-    <p>Change to:</p>
-
-    {% highlight html %}
-    <div class="form-group">
-    {% endhighlight %}
-
-    <p>And add a <code>form-control</code> CSS class into each form input</p>
-
-    {% highlight erb %}
-    <%= f.text_field :description, class:'form-control' %>
-    <%= f.file_field :file, class:'form-control' %>
-    {% endhighlight %}
-
-    <p>To make the button look nice, add a <code>btn btn-primary</code> CSS class to it</p>
-
-    {% highlight erb %}
-    <%= f.submit class:'btn btn-primary' %>
-    {% endhighlight %}
-
-    <h2 id="design-the-photo-gallery"><em>7.</em>Design the photo gallery</h2>
-
-    <p>Now it’s time to make the photo gallery (photo list) look more professional. For that, we are going to replace the table layout with a div layout.</p>
-
-    <p><strong>Mentor: Talk a little about table vs div (semantic markup).</strong></p>
-
-    <p>Open <code>app/views/photos/index.html.erb</code> and replace all lines with</p>
-
-    {% highlight erb %}
-    <% @photos.in_groups_of(3) do |group| %>
-      <div class="row">
-        <% group.compact.each do |photo| %>
-          <div class="col-xs-4">
-            <div class="panel panel-default">
-              <div class="panel-body">
-                <%= link_to photo_path(photo) do %>
-                  <%= image_tag photo.file_url, width: '100%' if photo.file.present? %>
-                <% end %>
-              </div>
-              <div class="panel-footer">
-                <%= photo.description %>
-              </div>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
-    {% endhighlight %}
-
-    <p><strong>Mentor: Explain what the new code means line by line, and talk a little about Bootstrap 12 grids layout.</strong></p>
-
-    <p>Refresh it! We get a nice looking photo gallery. Click the “New Photo” button, and add more photos with real text - the page will look much better with content. There is a principle of contemporary web design: content is the best decoration.</p>
-
-    <h2 id="design-the-photo-details-page"><em>8.</em>Design the photo details page</h2>
-
-    <p>Click the title of a photo, and you will be brought to the details page of the photo. Now it is still scaffold generated by Rails, so let’s make it better.</p>
-
-    <p>Open <code>app/views/photos/show.html.erb</code> and replace all lines with</p>
-
-    {% highlight erb %}
-    <p id="notice"><%= notice %></p>
-
-    <div class="row">
-      <div class="col-xs-9">
-        <%= image_tag(@photo.file_url, width: "100%") if @photo.file.present? %>
-      </div>
-
-      <div class="col-xs-3">
-        <p><b>Description: </b><%= @photo.description %></p>
-        <p>
-          <%= link_to 'Edit', edit_photo_path(@photo) %> |
-          <%= link_to 'Delete', @photo, confirm: 'Are you sure?', method: :delete %> |
-          <%= link_to 'Back', photos_path %>
-        </p>
-      </div>
-    </div>
-    {% endhighlight %}
-
-    <p><strong>Mentor: Explain what the new code means line by line.</strong></p>
-
-    <h2 id="finetune-the-routes"><em>9.</em>Finetune the routes</h2>
-
-    <p>If go to the index page of your app (that’s your app URL without <code>/photos</code> part) it still shows the “Welcome aboard” page. Let’s make it go directly to the photos page.</p>
-
-    <p>Open <code>config/routes.rb</code> and after the first line add</p>
-
-    {% highlight erb %}
-    root "photos#index"
-    {% endhighlight %}
-
-    <p>Then will need to delete the <code>index.html</code> from the <code>/public/</code> folder.</p>
-
-    <p>Test the change by refreshing the preview page in your browser.</p>
-
-    <p><strong>Mentor: Talk about routes, and include details on the order of routes and their relation to static files.</strong></p>
-
-    <h2 id="create-static-page-in-your-app"><em>10.</em>Create static page in your app</h2>
-
-    <p>Lets add a static page to our app that will hold information about the author of this application — you!</p>
-
-    {% highlight sh %}
-    $ bin/rails generate controller pages about
-    {% endhighlight %}
-
-    <p>This command will create you a new folder under app/views called /pages and under that a file called info.html.erb which will be your info page.</p>
-
-    {% highlight erb %}
-    get "pages/about"
-    {% endhighlight %}
-
-    <p>It also adds a new simple route to your routes.rb.</p>
-
-    <p>Now you can open the file <code>app/views/pages/info.html.erb</code> and add information about you in HTML and append /pages/about to the URL to see your new about page.</p>
-
-    <p>To add a link to the info page, open the file <code>app/views/layouts/application.html.erb</code>, and insert:</p>
-
-    {% highlight erb %}
-    <p class="navbar-text navbar-right">
-      <%= link_to 'About', pages_about_path, class:'navbar-link' %>
-    </p>
-    {% endhighlight %}
-
-    <p>In between:</p>
-
-    {% highlight html %}
-    <a class="navbar-brand" href="/">The Photo App</a>
-    </div>
-    {% endhighlight %}
-
-    And:
-
-    {% highlight html %}
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
-    {% endhighlight %}
+        <li class="active"><%= link_to 'Photos', photos_path %></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+{% endhighlight %}
+
+<p>And before <code class="highlighter-rouge">&lt;/body&gt;</code> add:</p>
+
+{% highlight html %}
+<footer class="footer">
+  <div class="container">
+    <p class="text-muted">RailsGirls KL 2016</p>
+  </div>
+</footer>
+{% endhighlight %}
+
+<p>Don't forget to save your work everytime you make changes.</p>
+
+<p>Now let’s also change the styling of the photos table. Open <code class="highlighter-rouge">app/assets/stylesheets/application.css</code> and at the bottom add:</p>
+
+{% highlight css %}
+body { padding-top: 100px; }
+footer { margin-top: 100px; }
+table, td, th { vertical-align: middle; border: none; }
+th { border-bottom: 1px solid #DDD; }
+{% endhighlight %}
+
+<p>Finally, delete the file <code class="highlighter-rouge">app/assets/stylesheets/scaffolds.css</code> because we don’t really need the default style generated by Rails.</p>
+
+<p>Now make sure you saved your files and refresh the browser tab previewing your app to see what was changed. You can also change the HTML &amp; CSS further.</p>
+
+<p><strong>Mentor: Talk a little about CSS and layouts.</strong></p>
+
+<h2 id="refine-the-navigation"><em>4.</em>Refine the navigation</h2>
+
+<p>Considering “photo” is the most important object in your app, we are going to put the “Add Photo” button on the navigation bar to make it always available.</p>
+
+<p>Open <code>app/views/layouts/application.html.erb</code>, under the line:</p>
+
+{% highlight erb %}
+<li class="active"><%= link_to 'Photos', photos_path %></li>
+{% endhighlight %}
+
+<p>Add:</p>
+
+{% highlight erb %}
+<li><%= link_to 'Add Photo', new_photo_path %></li>
+{% endhighlight %}
+
+<h2 id="adding-picture-uploads"><em>5.</em>Adding picture uploads</h2>
+
+<p>We need to install a piece of software to let us upload files in Rails.</p>
+
+<p>Open <code>Gemfile</code> in the project directory using your text editor and under the line</p>
+
+{% highlight ruby %}
+gem 'sqlite3'
+{% endhighlight %}
+
+<p>Add:</p>
+
+{% highlight ruby %}
+gem 'carrierwave'
+{% endhighlight %}
+
+<p><strong>Mentor: Explain what libraries are and why they are useful. Describe what open source software is.</strong></p>
+
+<p>Hit <code>CTRL</code>+<code>C</code> in the terminal to quit the server.</p>
+
+<p>In the terminal run:</p>
+
+{% highlight sh %}$ bundle install {% endhighlight %}
+
+<p>Now we can generate the code for handling uploads. In the terminal run:</p>
+
+{% highlight sh %}$ bin/rails generate uploader Picture {% endhighlight %}
+
+<p>At this point you need to restart the Rails server process in the terminal.</p>
+
+<p>Note: Some people might be using a second terminal to run the rails server continuously. If so you need to restart the Rails server process now. This is needed for the app to load the added library.</p>
+
+<p>Go to the terminal tab which runs the server and then hit <code>CTRL</code>+<code>C</code> to quit the server. Once it has stopped, you can press the up arrow to get to the last command entered, then hit enter to start the server again.</p>
+
+<p>Open <code>app/models/photo.rb</code> and under the line:</p>
+
+{% highlight ruby %}
+class Photo < ActiveRecord::Base
+{% endhighlight %}
+
+<p>Add:</p>
+
+{% highlight ruby %}
+mount_uploader :file, PictureUploader
+{% endhighlight %}
+
+<p>Open <code>app/views/photos/_form.html.erb</code> and change:</p>
+
+{% highlight erb %}
+<%= f.text_field :file %>
+{% endhighlight %}
+
+<p>To:</p>
+
+{% highlight erb %}
+<%= f.file_field :file %>
+{% endhighlight %}
+
+<p>Sometimes, you might get an <em>TypeError: can’t cast ActionDispatch::Http::UploadedFile to string.</em></p>
+
+<p>If this happens, in file <code>app/views/photos/_form.html.erb</code> change the line:</p>
+
+{% highlight erb %}
+<%= form_for(@photo) do |f| %>
+{% endhighlight %}
+
+<p>To:</p>
+
+{% highlight erb %}
+<%= form_for @photo, html: {multipart: true} do |f| %>
+{% endhighlight %}
+
+<p>In your browser, again click on the New Photo link. This time we can actually add a new photo. When you upload an image it doesn’t look nice because it only shows a path to the file, so let’s fix that.</p>
+
+<p>Open <code>app/views/photos/show.html.erb</code> and change:</p>
+
+{% highlight erb %}
+<%= @photo.file %>
+{% endhighlight %}
+
+<p>To:</p>
+
+{% highlight erb %}
+<%= image_tag(@photo.file_url, width: 600) if @photo.file.present? %>
+{% endhighlight %}
+
+<p>Now refresh your browser to see what changed.</p>
+
+<p><strong>Mentor: Talk a little about HTML.</strong></p>
+
+<h2 id="design-the-photo-upload-form"><em>6.</em>Design the photo upload form</h2>
+
+<p>Now that you have an upload form that works, let’s make it look nice with the help of Bootstrap.</p>
+
+<p>Open <code>app/views/photos/_form.html.erb</code>, where you see:</p>
+
+{% highlight html %}
+<div class="field">
+{% endhighlight %}
+
+<p>Change to:</p>
+
+{% highlight html %}
+<div class="form-group">
+{% endhighlight %}
+
+<p>And add a <code>form-control</code> CSS class into each form input</p>
+
+{% highlight erb %}
+<%= f.text_field :description, class:'form-control' %>
+<%= f.file_field :file, class:'form-control' %>
+{% endhighlight %}
+
+<p>To make the button look nice, add a <code>btn btn-primary</code> CSS class to it</p>
+
+{% highlight erb %}
+<%= f.submit class:'btn btn-primary' %>
+{% endhighlight %}
+
+<h2 id="design-the-photo-gallery"><em>7.</em>Design the photo gallery</h2>
+
+<p>Now it’s time to make the photo gallery (photo list) look more professional. For that, we are going to replace the table layout with a div layout.</p>
+
+<p><strong>Mentor: Talk a little about table vs div (semantic markup).</strong></p>
+
+<p>Open <code>app/views/photos/index.html.erb</code> and replace all lines with</p>
+
+{% highlight erb %}
+<% @photos.in_groups_of(3) do |group| %>
+  <div class="row">
+    <% group.compact.each do |photo| %>
+      <div class="col-xs-4">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <%= link_to photo_path(photo) do %>
+              <%= image_tag photo.file_url, width: '100%' if photo.file.present? %>
+            <% end %>
+          </div>
+          <div class="panel-footer">
+            <%= photo.description %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+{% endhighlight %}
+
+<p><strong>Mentor: Explain what the new code means line by line, and talk a little about Bootstrap 12 grids layout.</strong></p>
+
+<p>Refresh it! We get a nice looking photo gallery. Click the “New Photo” button, and add more photos with real text - the page will look much better with content. There is a principle of contemporary web design: content is the best decoration.</p>
+
+<h2 id="design-the-photo-details-page"><em>8.</em>Design the photo details page</h2>
+
+<p>Click the title of a photo, and you will be brought to the details page of the photo. Now it is still scaffold generated by Rails, so let’s make it better.</p>
+
+<p>Open <code>app/views/photos/show.html.erb</code> and replace all lines with</p>
+
+{% highlight erb %}
+<p id="notice"><%= notice %></p>
+
+<div class="row">
+  <div class="col-xs-9">
+    <%= image_tag(@photo.file_url, width: "100%") if @photo.file.present? %>
+  </div>
+
+  <div class="col-xs-3">
+    <p><b>Description: </b><%= @photo.description %></p>
+    <p>
+      <%= link_to 'Edit', edit_photo_path(@photo) %> |
+      <%= link_to 'Delete', @photo, confirm: 'Are you sure?', method: :delete %> |
+      <%= link_to 'Back', photos_path %>
+    </p>
   </div>
 </div>
+{% endhighlight %}
+
+<p><strong>Mentor: Explain what the new code means line by line.</strong></p>
+
+<h2 id="finetune-the-routes"><em>9.</em>Finetune the routes</h2>
+
+<p>If go to the index page of your app (that’s your app URL without <code>/photos</code> part) it still shows the “Welcome aboard” page. Let’s make it go directly to the photos page.</p>
+
+<p>Open <code>config/routes.rb</code> and after the first line add</p>
+
+{% highlight erb %}
+root "photos#index"
+{% endhighlight %}
+
+<p>Then will need to delete the <code>index.html</code> from the <code>/public/</code> folder.</p>
+
+<p>Test the change by refreshing the preview page in your browser.</p>
+
+<p><strong>Mentor: Talk about routes, and include details on the order of routes and their relation to static files.</strong></p>
+
+<h2 id="create-static-page-in-your-app"><em>10.</em>Create static page in your app</h2>
+
+<p>Lets add a static page to our app that will hold information about the author of this application — you!</p>
+
+{% highlight sh %}
+$ bin/rails generate controller pages about
+{% endhighlight %}
+
+<p>This command will create you a new folder under app/views called /pages and under that a file called info.html.erb which will be your info page.</p>
+
+{% highlight erb %}
+get "pages/about"
+{% endhighlight %}
+
+<p>It also adds a new simple route to your routes.rb.</p>
+
+<p>Now you can open the file <code>app/views/pages/info.html.erb</code> and add information about you in HTML and append /pages/about to the URL to see your new about page.</p>
+
+<p>To add a link to the info page, open the file <code>app/views/layouts/application.html.erb</code>, and insert:</p>
+
+{% highlight erb %}
+<p class="navbar-text navbar-right">
+  <%= link_to 'About', pages_about_path, class:'navbar-link' %>
+</p>
+{% endhighlight %}
+
+<p>In between:</p>
+
+{% highlight html %}
+<a class="navbar-brand" href="/">The Photo App</a>
+</div>
+{% endhighlight %}
+
+And:
+
+{% highlight html %}
+<div class="collapse navbar-collapse">
+  <ul class="nav navbar-nav">
+{% endhighlight %}

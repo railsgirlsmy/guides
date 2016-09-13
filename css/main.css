@@ -1,22 +1,20 @@
 html {
-  background: #f4f4f4;
-  text-align: justify;
+  background: #F4F4F4;
 }
 
 body {
   margin: 0px;
-  background: #fff;
   color: #333;
   text-rendering: optimizeLegibility;
   font-size: 15px;
   line-height: 1.6;
 }
 
-/*h1 {
+h1 {
   font-weight: normal;
   font-size: 3em;
   margin: 0.5em 0 1em;
-}*/
+}
 
 h2 {
   font-weight: normal;
@@ -24,19 +22,19 @@ h2 {
   margin: 1em 0 0.5em;
 }
 
-h2 em {
+h3 {
+  font-weight: normal;
+  font-size: 1.5em;
+  margin: 2em 0 0.8em;
+}
+
+h3 em {
   position: absolute;
   display: inline-block;
   margin-left: -1.5em;
   font-style: normal;
   font-weight: bold;
   color: #CCC;
-}
-
-/*h3 {
-  font-weight: normal;
-  font-size: 1.5em;
-  margin: 2em 0 0.8em;
 }
 
 h4 {
@@ -51,30 +49,31 @@ p {
 }
 
 ul li {
+  font-size: 16px;
   margin-bottom: 0.5em;
   line-height: 1.5;
-}*/
+}
 
 a {
-  color: #e0330c;
+  color: #E0330C;
 }
 
 a:hover {
-  color: #e0330c;
+  color: #E0330C;
   text-decoration: underline;
 }
 
-/*hr {
+hr {
   border-top-color: #ddd;
   margin: 2em 0;
 }
 
 table {
   margin-bottom: 1em;
-}*/
+}
 
 header {
-  height: 125px;
+  height: 140px;
   color: #fff;
   padding-top: 50px;
   background: #d3360b;
@@ -122,22 +121,13 @@ footer {
   text-align: center;
 }
 
+
 footer a {
   color: #111;
   border-color: #111;
 }
 
-img {
-  padding-bottom: 20px;
-  display: block;
-  margin: 0 auto;
-}
-
-.home {
-  padding-bottom: 25px;
-}
-
-/*.indent {
+.indent {
   margin-left: 70px;
 }
 
@@ -215,7 +205,7 @@ img {
 .hero {
   padding: 20px 320px 20px 0;
   background: url(../images/guides-hero.png) right 80px no-repeat;
-}*/
+}
 
 i.icon-text-editor, i.icon-prompt, i.icon-browser {
   background-position: 0 0;
@@ -226,7 +216,6 @@ i.icon-text-editor, i.icon-prompt, i.icon-browser {
   height: 50px;
   line-height: 50px;
 }
-
 i.icon-text-editor {
   background-image: url("/images/icons/icon-text-editor.png");
 }
@@ -237,4 +226,85 @@ i.icon-prompt{
 
 i.icon-browser {
   background-image: url("/images/icons/icon-browser.png");
+}
+
+.highlight {
+  margin-left: 30px;
+}
+
+.highlight pre {
+  overflow-x: auto;
+}
+
+.highlight pre code {
+  white-space: pre;
+}
+
+i.icon-small-text-editor, i.icon-small-prompt, i.icon-small-browser {
+  background-position: 0 0;
+  margin-left: 0px;
+  margin-top: 15px;
+  display: block;
+  width: 50px;
+  height: 20px;
+  line-height: 20px;
+  float: left;
+}
+i.icon-small-text-editor {
+  background-image: url("/images/icons/icon-small-text-editor.png");
+}
+i.icon-small-prompt{
+  background-image: url("/images/icons/icon-small-prompt.png");
+}
+i.icon-small-browser {
+  background-image: url("/images/icons/icon-small-browser.png");
+}
+
+.os-specific {
+  margin-bottom: 4em;
+}
+
+.os-specific .picker {
+  display: block;
+  float: right;
+}
+
+.os-specific .active {
+  font-weight: bold;
+}
+
+/* Correct padding on smaller screens */
+@media (max-width: 767px) {
+  header, footer{
+    margin-left:-20px;
+    margin-right:-20px;
+    padding-left:20px;
+    padding-right:20px;
+  }
+}
+
+/* Don't show the homepage image on mobile */
+@media (max-width: 480px) {
+  .hero {
+    padding: 20px 0;
+    background:none;
+  }
+}
+
+kbd {
+  padding: .1em .6em;
+  border: 1px solid #ccc;
+  font-size: 11px;
+  font-family: Arial,Helvetica,sans-serif;
+  background-color: #f7f7f7;
+  color: #333;
+  -moz-box-shadow: 0 1px 0 rgba(0,0,0,0.2),0 0 0 2px #fff inset;
+  -webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.2),0 0 0 2px #fff inset;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.2),0 0 0 2px #fff inset;
+  border-radius: 3px;
+  display: inline-block;
+  margin: 0 .1em;
+  text-shadow: 0 1px 0 #fff;
+  line-height: 1.5em;
+  white-space: nowrap;
 }

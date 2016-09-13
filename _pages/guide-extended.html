@@ -4,642 +4,741 @@ layout: default
 permalink: /guide-extended/
 ---
 
-<div class="home">
-  <div class="content">
-    <h1 class="page-heading">Rails Girls MY App Guide (Extended)</h1>
+<h2 class="page-heading">Rails Girls MY App Guide (Extended)</h2>
 
-    <p>
-      <em>Created by Vesa Vänskä, <a href="https://twitter.com/vesan">@vesan</a></em>
-      <br>
-      <em>Compiled for Rails Girls MY by Faezrah, <a href="https://twitter.com/railsgirlskl">@railsgirlskl</a></em>
-      <br>
-      <em>Credits to Ben Walker for the CSS styling.</em>
-    </p>
+<p>
+  <em>Created by Vesa Vänskä, <a href="https://twitter.com/vesan">@vesan</a>.</em>
+  <br>
+  <em>Compiled for Rails Girls MY by Faezrah, <a href="https://twitter.com/railsgirlskl">@railsgirlskl</a>.</em>
+  <br>
+  <em>Credits to <a href="http://devwalks.com/">Ben Walker</a> for the CSS styling.</em>
+</p>
 
-    <p>We are going to build our very own Instagram clone.</p>
+<p>We are going to build our very own Instagram clone.</p>
 
-    <p>This is what it will look like at the end of this tutorial:</p>
+<p>Alright, let's build it.</p>
 
-    <p>Alright, let's build it.</p>
+<h3 id="creating-a-new-rails-project"><em>1.</em>Creating a New Rails Project</h3>
 
-    <h2 id="creating-the-instagram-clone"><em>1.</em>Creating the Instagram Clone</h2>
+<p>Let's call our new project <code>instaclone</code>.</p>
 
-    <p>Let's call our new project <code>instaclone</code>.</p>
+<p>To create a new project in Rails, run this command in the terminal.</p>
 
-    <p>To create a new project in Rails, run this command in the terminal.</p>
+{% highlight sh %}
+$ rails new instaclone
+{% endhighlight %}
 
-    {% highlight sh %}$ rails new instaclone {% endhighlight %}
+<p>This will create a new Rails application called <code>instaclone</code> folder, and auto-generate files and folders that make up the structure of a Rails application. Most of the work in this tutorial will happen in the <code>app</code> sub-folder.</p>
 
-    <p>This will create a new Rails application called instaclone folder and install the gem dependencies that are already mentioned in Gemfile using bundle install.</p>
+<p>Now switch to your new Rails folder.</p>
 
-    <p>Now switch to your new folder.</p>
+{% highlight sh %}
+$ cd instaclone
+{% endhighlight %}
 
-    {% highlight sh %}$ cd instaclone {% endhighlight %}
+<p>To see what other files Rails has generated for you, type this command in the terminal:</p>
 
-    <p>The instaclone folder has a number of auto-generated files and folders that make up the structure of a Rails application. Most of the work in this tutorial will happen in the <code>app</code> sub-folder.</p>
+{% highlight sh %}
+$ ls
+{% endhighlight %}
 
-    <p>To see what other files Rails has generated for you, type this command in the terminal:</p>
+<p>Now, we need to make sure we've got Rails working properly.</p>
 
-    {% highlight sh %}$ ls {% endhighlight %}
+<p>To do this, we need to run the server by typing this command:</p>
 
-    <p>Now, we need to make sure we've got Rails working properly.</p>
+{% highlight sh %}
+$ bin/rails server -b 0.0.0.0
+{% endhighlight %}
 
-    <p>To do this, we need to run the server by typing this command:</p>
+<p>To see your application in action, open a browser window and navigate to: <code>http://localhost:3000/</code></p>
 
-    {% highlight sh %}$ bin/rails server -b 0.0.0.0 {% endhighlight %}
+<p>You should now see this friendly Rails default page.</p>
 
-    <p>To see your application in action, open a browser window and navigate to: <code>http://localhost:3000/</code></p>
+<img src="../images/guides/rails-page.png" alt="" class="img-responsive center-block">
 
-    <p>You should now see this friendly Rails default page.</p>
+<p>To stop the server, hit <kbd>CTRL + C</kbd>.</p>
 
-    <img src="../images/tutorials/rails-page.png" alt="" class="img-responsive">
+<p class="text-bold">Mentor: Explain what each command does. What was generated? What does the server do?</p>
 
-    <p>To stop the server, hit <code>Ctrl + C</code> in the terminal.</p>
+<h3 id="getting-up-and-running"><em>2.</em>Getting Up and Running</h3>
 
-    <p style="font-weight: bold">Mentor: Explain what each command does. What was generated? What does the server do?</p>
+<p>In your Instaclone application, you will now create a new resource. A resource is a term used to call a collection of similar objects so users will be able to access via URI and perform CRUD operations.</p>
 
-    <h2 id="getting-up-and-running"><em>2.</em>Getting Up and Running</h2>
+<p>For example, we want to have a collection of photos in our application.</p>
 
-    <p>In your Instaclone application, you will now create a new resource. A resource is a term used to call a collection of similar objects so users will be able to access via URI and perform CRUD operations.</p>
+<p>Go ahead and run this in the terminal:</p>
 
-    <p>For example, we want to have a collection of photos in our application.</p>
+{% highlight sh %}
+$ bin/rails generate resource photo file:string caption:string
+{% endhighlight %}
 
-    <p>Go ahead and run this in the terminal:</p>
+<p>This command will generate files we need for our photos collection, as well as two columns in our database.</p>
 
-    {% highlight sh %}$ bin/rails generate resource photo file:string caption:string {% endhighlight %}
+<p>But to get it to work properly we need to run a couple of other commands to update our database and restart the server.</p>
 
-    <p>This command will generate files we need for our photos collection, as well as two columns in our database.</p>
+{% highlight sh %}
+$ bin/rake db:migrate
+{% endhighlight %}
 
-    <p>But to get it to work properly we need to run a couple of other commands to update our database and restart the server.</p>
+{% highlight sh %}
+$ bin/rails server -b 0.0.0.0
+{% endhighlight %}
 
-    {% highlight sh %}$ bin/rake db:migrate {% endhighlight %}
-    {% highlight sh %}$ bin/rails server -b 0.0.0.0 {% endhighlight %}
+<p class="text-bold">Mentor: Explain the command, the model name and related database table, naming conventions, attributes and types, etc. What are migrations and why do you need them?</p>
 
-    <p style="font-weight: bold">Mentor: Explain the command, the model name and related database table, naming conventions, attributes and types, etc. What are migrations and why do you need them?</p>
+<h3 id="laying-down-the-ground-work"><em>3.</em>The First Form</h3>
 
-    <h2 id="your-first-form"><em>3.</em>Your First Form</h2>
+<p>Now that you have everything you need to build an Instagram clone, let's get coding.</p>
 
-    <p>Now that you have everything you need to build an Instagram clone, let's get coding.</p>
+<p>Ideally, you need a place within the application to submit a new photo. To do this, we will need a form for our users to fill in.</p>
 
-    <p>Open <code>app/controllers/photos_controller.rb</code>, and you will see something like this:</p>
+<p>Open <code>app/controllers/photos_controller.rb</code>, and you will see something like this:</p>
 
-    {% highlight ruby %}
-    class PhotosController < ApplicationController
-    end
-    {% endhighlight %}
+{% highlight ruby %}
+class PhotosController < ApplicationController
+end
+{% endhighlight %}
 
-    <p>To start with, we will need two actions in the controller. A <code>new</code> action and a <code>create</code> action.</p>
+<p>To start with, we will need two actions in the controller. A <code>new</code> action and a <code>create</code> action.</p>
 
-    <p>Below the line:</p>
+<p>Below the line:</p>
 
-    {% highlight erb %}
-    class PhotosController < ApplicationController
-    {% endhighlight %}
+{% highlight ruby %}
+class PhotosController < ApplicationController
+{% endhighlight %}
 
-    <p>Add the code like so:</p>
+<p>Add the code like so:</p>
 
-    {% highlight erb %}
-    def new
-      @photo = Photo.new
-    end
+{% highlight ruby %}
+def new
+  @photo = Photo.new
+end
 
-    def create
-      @photo = Photo.new(photo_params)
-      if @photo.save
-      else
-        render :new
-      end
-    end
+def create
+  @photo = Photo.new(photo_params)
+  if @photo.save
+  else
+    render :new
+  end
+end
 
-    private
-      def photo_params
-        params.require(:photo).permit(:file, :caption)
-      end
-    {% endhighlight %}
+private
+  def photo_params
+    params.require(:photo).permit(:file, :caption)
+  end
+{% endhighlight %}
 
-    <p>Now, go to <code>app/views/photos/</code> and create a new form file called <code>new.html.erb</code>.</p>
+<p>Now, go to <code>app/views/photos/</code> and create a new file called <code>new.html.erb</code>.</p>
 
-    <p>Type the following code:</p>
+<p>Type the following code:</p>
 
-    {% highlight erb %}
-    <%= form_for @photo do |f| %>
+{% highlight erb %}
+<%= form_for @photo do |f| %>
+  <p>
+    <%= f.label :file %><br>
+    <%= f.text_field :file %>
+  </p>
+
+  <p>
+    <%= f.label :caption %><br>
+    <%= f.text_field :caption %>
+  </p>
+
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
+{% endhighlight %}
+
+<p>Save the file and go to <code>http://localhost:3000/photos/new</code> to see the form live in your browser after you refresh it.</p>
+
+<p class="text-bold">Checkpoint:</p>
+
+<p>Your page should now look something like this:</p>
+
+<img src="../images/guides/1-photo-new.png" alt="" class="img-responsive center-block">
+
+<p>It looks a little basic, right?</p>
+
+<p>That's okay, let's focus on building our main feature before we move on to styling the application.</p>
+
+<p class="text-bold">Mentor: Explain what is MVC in Rails.</p>
+
+<h3 id="displaying-photos"><em>4.</em>Showing Photos</h3>
+
+<p>Before we can test our new photo form, let's add another action in our <code>app/controllers/photos_controller.rb</code>.</p>
+
+<p>Below the <code>create</code> action, add a <code>show</code> action, like so:</p>
+
+{% highlight ruby %}
+def show
+  @photo = Photo.find(params[:id])
+end
+{% endhighlight %}
+
+<p>Next, create a show file in <code>app/views/photos</code> and call it <code>show.html.erb</code>.</p>
+
+<p>In your <code>show.html.erb</code>, type the following code:</p>
+
+{% highlight erb %}
+<%= link_to @photo.file %>
+<h3><%= @photo.caption %></h3>
+{% endhighlight %}
+
+<p>We also need to modify our <code>create</code> action a bit. Add a redirect when your photo is saved, like so:</p>
+
+{% highlight ruby %}
+def create
+  @photo = Photo.new(photo_params)
+  if @photo.save
+    redirect_to photo_path(@photo)
+  else
+    render :new
+  end
+end
+{% endhighlight %}
+
+<p>Now, every time when we upload a new photo, if the photo is saved succefully, we will get redirected to the photo show page automatically.</p>
+
+<p>Give it a try. Test the form, and it should redirect you to a page with content you've just submitted.</p>
+
+<p class="text-bold">Checkpoint:</p>
+
+<p>Your photo show page should look similar to this:</p>
+
+<img src="../images/guides/2-photo-show.png" alt="" class="img-responsive center-block">
+
+<p class="text-bold">Mentor: Talk a little about CRUD operations and RESTful resources.</p>
+
+<h3 id="uploading-photos"><em>5.</em>Uploading Photos</h3>
+
+<p>Now you can actually create a new caption for a photo, but how to actually upload an image?</p>
+
+<p>We need to install a piece of software to let us upload files in Rails.</p>
+
+<p>Open <code>Gemfile</code> in the project directory using your text editor and under the line:</p>
+
+{% highlight ruby %} # gem 'capistrano-rails', group: :development {% endhighlight %}
+
+<p>Add this line:</p>
+
+{% highlight ruby %} gem 'carrierwave' {% endhighlight %}
+
+<p>Every time you add a new gem, you need to run a command to install it to your application.</p>
+
+<p>So, in the terminal, run:</p>
+
+{% highlight sh %}$ bundle install {% endhighlight %}
+
+<p>At this point you might need to restart the Rails server process in the terminal.</p>
+
+<p>Note: Some people might be using a second terminal to run the rails server continuously. If so you need to restart the Rails server process now. This is needed for the app to load the added library.</p>
+
+<p>Go to the terminal tab which runs the server and then hit <kbd>CTRL + C</kbd> to quit the server. Once it has stopped, you can press the up arrow to get to the last command entered, then hit enter to start the server again.</p>
+
+<p class="text-bold">Mentor: Explain what libraries are and why they are useful. Describe what open source software is.</p>
+
+<p>Now that we have installed the gem, we can generate the code for handling uploads.</p>
+
+<p>In the terminal run:</p>
+
+{% highlight sh %}$ bin/rails generate uploader Photo {% endhighlight %}
+
+<p>This command will generate a new file called <code>photo_uploader.rb</code>. You need this file to configure your upload settings.</p>
+
+<p>Next, open <code>app/models/photo.rb</code> and under the line:</p>
+
+{% highlight ruby %} class Photo < ApplicationRecord {% endhighlight %}
+
+<p>Add:</p>
+
+{% highlight ruby %} mount_uploader :file, PhotoUploader {% endhighlight %}
+
+<p>Then, open app/views/photos/new.html.erb and change:</p>
+
+{% highlight erb %} <%= f.text_field :file %> {% endhighlight %}
+
+<p>To:</p>
+
+{% highlight erb %} <%= f.file_field :file %> {% endhighlight %}
+
+<p>This will open your local window and let you select a photo to upload.</p>
+
+<p>Sometimes, you might get an <span style="font-style: italic">TypeError: can’t cast ActionDispatch::Http::UploadedFile to string.</span></p>
+
+<p>If this happens, in file <code>app/views/photos/new.html.erb</code> change the line:</p>
+
+{% highlight erb %} <%= form_for @photo do |f| %> {% endhighlight %}
+
+<p>To:</p>
+
+{% highlight erb %} <%= form_for @photo, html: { multipart: true } do |f| %> {% endhighlight %}
+
+<p>If you refresh your browser now, your form should now look something like this:</p>
+
+<img src="../images/guides/3-photo-new-form.png" alt="" class="img-responsive center-block">
+
+<p>This time we can actually add a new photo. When you upload an image it doesn’t look nice because it only shows a path to the file, so let’s fix that.</p>
+
+<p>Open <code>app/views/photos/show.html.erb</code> and change:</p>
+
+{% highlight erb %} <%= link_to @photo.file %> {% endhighlight %}
+
+<p>To:</p>
+
+{% highlight erb %} <%= image_tag(@photo.file_url, width: 600) if @photo.file.present? %> {% endhighlight %}
+
+<p>Now refresh your browser to see what changed.</p>
+
+<p style="font-weight: bold;"></p>
+
+<h3 id="displaying-all-photos"><em>6.</em>Showing All Photos</h3>
+
+<p>Now that we can upload our photos, we need to find a way to show all of our photos.</p>
+
+<p>To do this, create an <code>index</code> action in our <code>app/controllers/photos_controller.rb</code>.</p>
+
+<p>Below this line:</p>
+
+{% highlight ruby %}
+class PhotosController < ApplicationController
+{% endhighlight %}
+
+<p>And before the <code>new</code> action, type the code:</p>
+
+{% highlight ruby %}
+  def index
+    @photos = Photo.order(created_at: :desc)
+  end
+{% endhighlight %}
+
+<p>Next, create a new file called <code>index.html.erb</code> inside <code>apps/views/photos</code> and type the following:</p>
+
+{% highlight erb %}
+  <h1>All Photos</h1>
+  <% if @photos.any? %>
+    <% @photos.each do |photo| %>
       <p>
-        <%= f.label :file %><br>
-        <%= f.text_field :file %>
+        <%= image_tag(photo.file_url, width: 300) if photo.file.present? %>
+        <%= photo.caption %>
       </p>
+    <% end  %>
+  <% else  %>
+    <p>No photos found.</p>
+  <% end %>
+  <p><%= link_to "New Photo", new_photo_path %></p>
+{% endhighlight %}
 
-      <p>
-        <%= f.label :caption %><br>
-        <%= f.text_field :caption %>
-      </p>
+<p>Now, go to <code>http://localhost:3000/photos</code> to see the changes.</p>
 
-      <p>
-        <%= f.submit %>
-      </p>
-    <% end %>
-    {% endhighlight %}
+<p class="text-bold">Checkpoint:</p>
 
-    <p>Save the file and see the form live in your browser after you refresh it.</p>
+<p>Your <code>index</code> page should look something like this:</p>
 
-    <p style="font-weight: bold;">Checkpoint:</p>
+<img src="../images/guides/4-photos-index.png" alt="" class="img-responsive center-block">
 
-    <p>Your page should now look something like this:</p>
+<p class="text-bold">Mentor: Talk a little the relationship between HTML and Rails. What part of views is HTML and what is Embedded Ruby (ERB)?</p>
 
-    <img src="../images/tutorials/photo-form.png" alt="">
+<h3 id="updating-photos"><em>7.</em>Updating Photos</h3>
 
-    <p>It looks a little basic, right?</p>
+<p>The first step we'll take is adding an <code>edit</code> and <code>update</code> actions to the <code>PhotosController</code> after the <code>show</code> action, as follows:</p>
 
-    <p>That's okay, let's focus on building our main feature before we move on to styling the application.</p>
+{% highlight ruby %}
+def edit
+  @photo = Photo.find(params[:id])
+end
 
-    <p style="font-weight: bold;">Mentor: Explain what is a controller, the C in MVC in Rails.</p>
+def update
+  @photo = Photo.find(params[:id])
 
-    <h2 id="displaying-photos"><em>4.</em>Displaying Photos</h2>
+  if @photo.update(article_params)
+    redirect_to @photo
+  else
+    render :edit
+  end
+end
+{% endhighlight %}
 
-    <p>Before we can test our new photo form, let's add another action in our <code>app/controllers/photos_controller.rb</code>.</p>
+<p>Now, create a file called <code>edit.html.erb</code> in <code>app/views/articles/</code> and add a form similar to the one we used when creating new photos, like this:</p>
 
-    <p>Below the <code>create</code> action, add a <code>show</code> action, like so:</p>
+{% highlight erb %}
+<%= form_for @photo do |f| %>
+  <p>
+    <%= f.label :file %><br>
+    <%= f.file_field :file %>
+  </p>
 
-    {% highlight erb %}
-    def show
-      @photo = Photo.find(params[:id])
-    end
-    {% endhighlight %}
+  <p>
+    <%= f.label :caption %><br>
+    <%= f.text_field :caption %>
+  </p>
 
-    <p>Next, create a show file in <code>app/views/photos</code> and call it <code>show.html.erb</code>.</p>
+  <p>
+    <%= f.submit %>
+  </p>
+<% end %>
+{% endhighlight %}
 
-    <p>In your <code>show.html.erb</code>, Type the following code:</p>
+<p>Finally, we want to show a link to the edit action in the photo show page, like so:</p>
 
-    {% highlight erb %}
-    <%= link_to @photo.file %>
-    <h2><%= @photo.caption %></h1>
-    {% endhighlight %}
+{% highlight erb %}
+<%= link_to 'Edit', edit_photo_path(@photo) %>
+{% endhighlight %}
 
-    <p>We also need to modify our <code>create</code> action a bit. Add a redirect when your photo is saved, like so:</p>
+<p class="text-bold">Checkpoint: And here's how our app looks so far:</p>
 
-    {% highlight erb %}
-    def create
-      @photo = Photo.new(photo_params)
-      if @photo.save
-        redirect_to photo_path(@photo)
-      else
-        render :new
-      end
-    end
-    {% endhighlight %}
+<img src="../images/guides/5-photo-edit.png" alt="" class="img-responsive center-block">
 
-    <p>Now, every time when we upload a new photo, if the photo is saved succefully, we will get redirected to the photo show page automatically.</p>
+<h3 id="deleting-photos"><em>7.</em>Deleting Photos</h3>
 
-    <p style="font-weight: bold;">Checkpoint:</p>
+<p>Just like Instagram, we would like to be able to delete our photos.</p>
 
-    <p>Your photo page should look similar to this:</p>
+<p>Let's first create a <code>destroy</code> action in the controller that deletes the specific record. We then need to provide a link to that action in our index view.</p>
 
-    <img src="../images/tutorials/photo-show.png" alt="" class="img-responsive">
+<p>So, in our <code>photos_controller.rb</code>, just below the <code>update</code> action, type as follows:</p>
 
-    <p style="font-weight: bold;">Mentor: Talk a little about CRUD operations and RESTful resources.</p>
+{% highlight ruby %}
+  def destroy
+    @photo = Photo.find(params[:id])
+    @photo.destroy
 
-    <h2 id="uploading-photos"><em>5.</em>Uploading Photos</h2>
+    redirect_to photos_path
+  end
+{% endhighlight %}
 
-    <p>Now you can actually create a new caption for a photo, but how to actually upload an image?</p>
+<p>And our simple link to that action with a warning on our <code>show.html.erb</code> view:</p>
 
-    <p>We need to install a piece of software to let us upload files in Rails.</p>
+{% highlight erb %}
+  <%= link_to "Delete", photo_path(@photo), method: :delete, data: { confirm: "Are you sure you want to delete this photo?" } %>
+{% endhighlight %}
 
-    <p>Open <code>Gemfile</code> in the project directory using your text editor and under the line:</p>
+<p>Save your file and refresh your browser, you should see a delete link available for the photo, similar to this:</p>
 
-    {% highlight erb %} # gem 'capistrano-rails', group: :development {% endhighlight %}
+<img src="../images/guides/6-photo-delete.png" alt="" class="img-responsive center-block">
 
-    <p>Add this line:</p>
+<p>When you click on the delete link, a confirmation dialog box will appear, like this:</p>
 
-    {% highlight html %} gem 'carrierwave' {% endhighlight %}
+<img src="../images/guides/6-photo-delete-confirm.png" alt="" class="img-responsive center-block">
 
-    <p>Every time you add a new gem, you need to run a command to install it to your application.</p>
+<p>And it’s done! Try deleting one of your photos now and see what happens.</p>
 
-    <p>So, in the terminal, run:</p>
+<h3 id="styling"><em>8.</em>Styling</h3>
 
-    {% highlight sh %}$ bundle install {% endhighlight %}
+<p>Now, ehem... It's the moment of truth. Styling!</p>
 
-    <p>At this point you might need to restart the Rails server process in the terminal.</p>
+<p>To start, open <code>Gemfile</code>, and right below the <code>carrierwave</code> gem, add:</p>
 
-    <p>Note: Some people might be using a second terminal to run the rails server continuously. If so you need to restart the Rails server process now. This is needed for the app to load the added library.</p>
+{% highlight ruby %}
+gem 'bootstrap-sass', '~> 3.3.6'
+gem 'font-awesome-sass', '~> 4.6.2'
+{% endhighlight %}
 
-    <p>Go to the terminal tab which runs the server and then hit <code>CTRL + C</code> to quit the server. Once it has stopped, you can press the up arrow to get to the last command entered, then hit enter to start the server again.</p>
+<p>Remember, you have to run:</p>
 
-    <p style="font-weight: bold">Mentor: Explain what libraries are and why they are useful. Describe what open source software is.</p>
+{% highlight sh %}
+$ bundle install
+{% endhighlight %}
 
-    <p>Now that we have installed the gem, we can generate the code for handling uploads.</p>
+<p>Every time you add a new gem.</p>
 
-    <p>In the terminal run:</p>
+<p>You might also need to restart your server so the newly added gem is loaded.</p>
 
-    {% highlight sh %}$ bin/rails generate uploader Photo {% endhighlight %}
+<p>Now, in <code>app/assets/stylesheets</code>, rename <code>application.css</code> to <code>application.scss</code>.</p>
 
-    <p>This command will generate a new file called <code>photo_uploader.rb</code>. You need this file to configure your upload settings.</p>
+<p>Then, replace all of its content, with:</p>
 
-    <p>Next, open <code>app/models/photo.rb</code> and under the line:</p>
+{% highlight ruby %}
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "font-awesome-sprockets";
+@import "font-awesome";
+{% endhighlight %}
 
-    {% highlight erb %} class Photo < ApplicationRecord {% endhighlight %}
+<p class="text-bold">Checkpoint:</p>
 
-    <p>Add:</p>
+<p>My <code>application.scss</code> looks like this:</p>
 
-    {% highlight erb %} mount_uploader :file, PhotoUploader {% endhighlight %}
+<img src="../images/guides/7-application-scss.png" alt="" class="img-responsive center-block">
 
-    <p>Then, open app/views/photos/new.html.erb and change:</p>
+<p>Next, open <code>application.js</code> in <code>app/assets/javascripts</code>, and add the following:</p>
 
-    {% highlight erb %} <%= f.text_field :file %> {% endhighlight %}
-
-    <p>To:</p>
-
-    {% highlight erb %} <%= f.file_field :file %> {% endhighlight %}
-
-    <p>This will open your local window and let you select a photo to upload.</p>
-
-    <p>Sometimes, you might get an <span style="font-style: italic">TypeError: can’t cast ActionDispatch::Http::UploadedFile to string.</span></p>
-
-    <p>If this happens, in file <code>app/views/photos/new.html.erb</code> change the line:</p>
-
-    {% highlight erb %} <%= form_for @photo do |f| %> {% endhighlight %}
-
-    <p>To:</p>
-
-    {% highlight erb %} <%= form_for @photo, html: { multipart: true } do |f| %> {% endhighlight %}
-
-    <p>If you refresh your browser now, your form should now look something like this:</p>
-
-    <img src="../images/tutorials/file-field.png" alt="" class="img-responsive">
-
-    <p>This time we can actually add a new photo. When you upload an image it doesn’t look nice because it only shows a path to the file, so let’s fix that.</p>
-
-    <p>Open <code>app/views/photos/show.html.erb</code> and change:</p>
-
-    {% highlight erb %} <%= link_to @photo.file %> {% endhighlight %}
-
-    <p>To:</p>
-
-    {% highlight erb %} <%= image_tag(@photo.file_url, width: 600) if @photo.file.present? %> {% endhighlight %}
-
-    <p>Now refresh your browser to see what changed.</p>
-
-    <p style="font-weight: bold;"></p>
-
-    <h2 id="displaying-all-photos"><em>6.</em>Displaying All Photos</h2>
-
-    <p>Now that we can upload our photos, we need to find a way to show all of our photos.</p>
-
-    <p>To do this, create an <code>index</code> action in our <code>app/controllers/photos_controller.rb</code>.</p>
-
-    <p>Below this line:</p>
-
-    {% highlight erb %} class PhotosController < ApplicationController {% endhighlight %}
-
-    <p>And before the <code>new</code> action, type the code:</p>
-
-    {% highlight erb %}
-      def index
-        @photos = Photo.order(created_at: :desc)
-      end
-    {% endhighlight %}
-
-    <p>Next, create a new file called <code>index.html.erb</code> inside <code>apps/views/photos</code> and type the following:</p>
-
-    {% highlight erb %}
-      <h1>All Photos</h1>
-      <% if @photos.any? %>
-        <% @photos.each do |photo| %>
-          <p>
-            <%= image_tag(photo.file_url, width: 300) if photo.file.present? %>
-            <%= photo.caption %>
-          </p>
-        <% end  %>
-      <% else  %>
-        <p>No photos found.</p>
-      <% end %>
-      <p><%= link_to "New Photo", new_photo_path %></p>
-    {% endhighlight %}
-
-    <p>Now, go to <code>http://localhost:/3000/photos</code> to see the changes.</p>
-
-    <p style="font-weight: bold;">Checkpoint:</p>
-
-    <p>Your <code>index</code> page should look something like this:</p>
-
-    <img src="../images/tutorials/index-page.png" alt="" class="img-responsive">
-
-    <p style="font-weight: bold;">Mentor: Talk a little the relationship between HTML and Rails. What part of views is HTML and what is Embedded Ruby (ERB)?</p>
-
-    <h2 id="deleting-photos"><em>7.</em>Deleting Photos</h2>
-
-    <p>Just like Instagram, we would like to be able to delete our photos. Deleting is super simple and can be fleshed out nice and quickly. </p>
-
-    <p>Let's first create a <code>destroy</code> action in the controller that deletes the specific record. We then need to provide a link to that action in our index view.</p>
-
-    <p>So, in our <code>photos_controller.rb</code>, just below the <code>show</code> action, type as follows:</p>
-
-    {% highlight erb %}
-      def destroy
-        @photo = Photo.find(params[:id])
-        @photo.destroy
-
-        redirect_to photos_path
-      end
-    {% endhighlight %}
-
-    <p>And our simple link to that action with a warning on our <code>index.html.erb</code> view:</p>
-
-    {% highlight erb %}
-      <%= link_to "Delete", photo_path(photo), method: :delete, data: { confirm: "Are you sure you want to delete this photo?" } %>
-    {% endhighlight %}
-
-    <p>Save your file and refresh your browser, you should see a delete link available for the photos, similar to this:</p>
-
-    <img src="../images/tutorials/photo-delete.png" alt="" class="img-responsive">
-
-    <p>When you click on the delete link, a confirmation dialog box will appear, like this:</p>
-
-    <img src="../images/tutorials/photo-delete-2.png" alt="" class="img-responsive">
-
-    <p>And it’s done! Try deleting one of your photos now and see what happens.</p>
-
-    <h2 id="styling"><em>8.</em>Styling</h2>
-
-    <p>Now, ehem... It's the moment of truth. Styling!</p>
-
-    <p>To start, open <code>Gemfile</code>, and right below your <code>carrierwave</code> gem, add:</p>
-
-    {% highlight erb %}
-    gem 'bootstrap-sass', '~> 3.3.6'
-    gem 'font-awesome-sass', '~> 4.6.2'
-    {% endhighlight %}
-
-    <p>Remember, you have to run:</p>
-
-    {% highlight erb %}$ bundle install{% endhighlight %}
-
-    <p>Every time you add a new gem.</p>
-
-    <p>You might also need to restart your server so the newly added gem is loaded.</p>
-
-    <p>Now, in <code>app/assets/stylesheets</code>, rename <code>application.css</code> to <code>application.scss</code>.</p>
-
-    <p>Then, replace all of its content, with:</p>
-
-    {% highlight erb %}
-    @import "bootstrap-sprockets";
-    @import "bootstrap";
-    @import "font-awesome-sprockets";
-    @import "font-awesome";
-    {% endhighlight %}
-
-    <p style="font-weight: bold;">Checkpoint:</p>
-
-    <p>My <code>application.scss</code> looks like this:</p>
-
-    <img src="../images/tutorials/application-scss.png" alt="" class="img-responsive">
-
-    <p>Next, open <code>application.js</code> in <code>app/assets/javascripts</code>, and add the following:</p>
-
-    {% highlight js %}
-    //= require bootstrap-sprockets
-    {% endhighlight %}
-
-    <p>Below this line of code:</p>
-
-    {% highlight js %}
-    //= require jquery_ujs
-    {% endhighlight %}
-
-    <p style="font-weight: bold;">Mentor: Talk a little about CSS, CSS Framework and Bootstrap.</p>
-
-    <p>Okay so you have Bootstrap installed. Now, what?</p>
-
-    <p>Since this application is after all, a clone of Instagram, we're going to steal their styling, just a little bit.</p>
-
-    <p>In <code>app/views/layouts/</code>, open <code>application.html.erb</code> and add the following code, right below <code>body</code>:</p>
-
-    {% highlight erb %}
-    <nav class="navbar navbar-default navbar-static-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <%= link_to "InstaClone", photos_path, class: "navbar-brand" %>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li><%= link_to "About", photos_path %></li>
-            <li><%= link_to "New Photo", new_photo_path %></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-    {% endhighlight %}
-
-    <p>This is our basic header, and it's shown in all of our pages because we put the code in <code>application.html.erb</code>. This means we don't have to add the navbar to everything!</p>
-
-    <p>Still in <code>application.html.erb</code>, replace:</p>
-
-    {% highlight erb %}
-    <%= yield %>
-    {% endhighlight %}
-
-    <p>With the following:</p>
-
-    {% highlight erb %}
-    <section class="container">
-      <%= yield %>
-    </section>
-    {% endhighlight %}
-
-    <p>Now, let's style the photos index page first. Add these code to your <code>application.scss</code>:</p>
-
-    {% highlight scss %}
-    body {
-      background-color: #fafafa;
-      font-family: proxima-nova, 'Helvetica Neue', Arial, Helvetica, sans-serif;
-    }
-
-    .navbar-brand {
-      a {
-        color: #125688;
-      }
-    }
-
-    .navbar-default {
-      background-color: #fff;
-      height: 54px;
-      .navbar-nav li a {
-        color: #125688;
-      }
-    }
-
-    .navbar-container {
-      width: 640px;
-      margin: 0 auto;
-    }
-
-    .photos-wrapper {
-      padding-top: 40px;
-      margin: 0 auto;
-      max-width: 642px;
-      width: 100%;
-    }
-
-    .photo {
-      background-color: #fff;
-      border-color: #edeeee;
-      border-style: solid;
-      border-radius: 3px;
-      border-width: 1px;
-      margin-bottom: 60px;
-    }
-
-    .photo-head {
-      height: 64px;
-      padding: 14px 20px;
-      color: #125688;
-      font-size: 15px ;
-      line-height: 18px;
-      .thumbnail {}
-      .name {
-        display: block;
-      }
-    }
-
-    .image {
-      border-bottom: 1px solid #eeefef;
-      border-top: 1px solid #eeefef;
-    }
-
-    .caption {
-      padding: 24px 24px;
-      font-size: 15px;
-      line-height: 18px;
-    }
-
-    .form-wrapper {
-      width: 60%;
-      margin: 20px auto;
-      background-color: #fff;
-      padding: 40px;
-      border: 1px solid #eeefef;
-      border-radius: 3px;
-    }
-
-    .edit-links {
-      margin-top: 20px;
-      margin-bottom: 40px;
-    }
-    {% endhighlight %}
-
-    <p>Then, in <code>app/views/photos/index.html.erb</code>, replace the content of the page as follows:</p>
-
-    {% highlight erb %}
-    <% if @photos.any? %>
-      <div class="row">
-        <% @photos.in_groups_of(3) do |group| %>
-          <% group.compact.each do |photo| %>
-          <div class="col-md-4">
-            <div class="photo">
-              <div class="photo-head">
-                <h4 class="name">
-                  "RG Kuching"
-                </h4>
-              </div>
-              <div class="image center-block">
-                <%= link_to photo_path(photo) do %>
-                  <%= image_tag(photo.file_url, class: "img-responsive") if photo.file.present? %>
-                <% end %>
-              </div>
-              <p class="caption">
-                <%= photo.caption %>
-                <%= link_to photo_path(photo), method: :delete, data: { confirm: "Are you sure you want to delete this photo?" }, class: "btn btn-danger btn-xs pull-right" do %>
-                  <i class="i fa fa-trash"></i>
-                <% end %>
-              </p>
-            </div>
+{% highlight js %}
+//= require bootstrap-sprockets
+{% endhighlight %}
+
+<p>Below this line of code:</p>
+
+{% highlight js %}
+//= require jquery_ujs
+{% endhighlight %}
+
+<p class="text-bold">Mentor: Talk a little about CSS, CSS Framework and Bootstrap.</p>
+
+<p>Okay so you have Bootstrap installed. Now, what?</p>
+
+<p>Since this application is after all, a clone of Instagram, we're going to steal their styling, just a little bit.</p>
+
+<p>In <code>app/views/layouts/</code>, open <code>application.html.erb</code> and add the following code, right below <code>body</code>:</p>
+
+{% highlight erb %}
+<nav class="navbar navbar-default navbar-static-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <%= link_to "InstaClone", photos_path, class: "navbar-brand" %>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li><%= link_to "New Photo", new_photo_path %></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+{% endhighlight %}
+
+<p>This is our basic header, and it's shown in all of our pages because we put the code in <code>application.html.erb</code>. This means we don't have to add the navbar to everything!</p>
+
+<p>Still in <code>application.html.erb</code>, replace:</p>
+
+{% highlight erb %}
+<%= yield %>
+{% endhighlight %}
+
+<p>With the following:</p>
+
+{% highlight erb %}
+<section class="container">
+  <%= yield %>
+</section>
+{% endhighlight %}
+
+<p>Now, let's style the photos index page first. Add these code to your <code>application.scss</code>:</p>
+
+{% highlight scss %}
+body {
+  background-color: #fafafa;
+}
+
+.navbar-brand {
+  a {
+    color: #125688;
+  }
+}
+
+.navbar-default {
+  background-color: #fff;
+  height: 54px;
+  .navbar-nav li a {
+    color: #125688;
+  }
+}
+
+.navbar-container {
+  width: 640px;
+  margin: 0 auto;
+}
+
+.photos-wrapper {
+  padding-top: 40px;
+  margin: 0 auto;
+  max-width: 642px;
+  width: 100%;
+}
+
+.photo {
+  background-color: #fff;
+  border-color: #edeeee;
+  border-style: solid;
+  border-radius: 3px;
+  border-width: 1px;
+  margin-bottom: 60px;
+}
+
+.photo-head {
+  height: 64px;
+  padding: 14px 20px;
+  color: #125688;
+  font-size: 15px ;
+  line-height: 18px;
+  .thumbnail {}
+  .name {
+    display: block;
+  }
+}
+
+.image {
+  border-bottom: 1px solid #eeefef;
+  border-top: 1px solid #eeefef;
+}
+
+.caption {
+  padding: 24px 24px;
+  font-size: 15px;
+  line-height: 18px;
+}
+
+.form-wrapper {
+  width: 60%;
+  margin: 20px auto;
+  background-color: #fff;
+  padding: 40px;
+  border: 1px solid #eeefef;
+  border-radius: 3px;
+}
+
+.edit-links {
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+{% endhighlight %}
+
+<p>Then, in <code>app/views/photos/index.html.erb</code>, replace the content of the page as follows:</p>
+
+{% highlight erb %}
+<% if @photos.any? %>
+  <div class="row">
+    <% @photos.in_groups_of(3) do |group| %>
+      <% group.compact.each do |photo| %>
+      <div class="col-md-4">
+        <div class="photo">
+          <div class="photo-head">
+            <h4 class="name">
+              Rails Girls MY
+            </h4>
           </div>
-          <% end %>
-        <% end  %>
+          <div class="image center-block">
+            <%= link_to photo_path(photo) do %>
+              <%= image_tag(photo.file_url, class: "img-responsive center-block") if photo.file.present? %>
+            <% end %>
+          </div>
+          <p class="caption"><%= photo.caption %></p>
+        </div>
       </div>
-    <% else  %>
-      <p>No photos found.</p>
-    <% end %>
-    {% endhighlight %}
+      <% end %>
+    <% end  %>
+  </div>
+<% else  %>
+  <p>No photos found.</p>
+<% end %>
+{% endhighlight %}
 
-    <p style="font-weight: bold;">Checkpoint: Now, if you refresh your browser, the page should look something like this:
-    </p>
+<p class="text-bold">Checkpoint: Now, if you refresh your browser, the page should look something like this:
+</p>
 
-    <img src="../images/tutorials/instaclone-index.png" alt="" class="img-responsive">
+<img src="../images/guides/8-photos-index.png" alt="" class="img-responsive center-block">
 
-    <p>Much better than before, right?</p>
+<p>Much better than before, right?</p>
 
-    <p>Okay, next let's quickly tidy up our new post view and form.</p>
+<p>Okay, next let's quickly tidy up our photo form and photo show page.</p>
 
-    <p>Open the <code>apps/views/photos/new.html.erb</code>, and make sure your code look similar to this:</p>
+<p>Open the <code>apps/views/photos/new.html.erb</code>, and make sure your code look similar to this:</p>
 
-    {% highlight erb %}
-    <div class="form-wrapper">
-      <%= form_for @photo, html: { class: 'form-horizontal', multipart: true } do |f| %>
+{% highlight erb %}
+<div class="form-wrapper">
+  <%= form_for @photo, html: { class: 'form-horizontal', multipart: true } do |f| %>
+    <div class="form-group">
+      <%= f.label :file %><br>
+      <%= f.file_field :file, class: "form-control" %>
+    </div>
 
-        <div class="form-group">
-          <%= f.label :file %><br>
-          <%= f.file_field :file, class: "form-control" %>
-        </div>
+    <div class="form-group text-center">
+      <%= f.label :caption %><br>
+      <%= f.text_field :caption, class: "form-control" %>
+    </div>
 
-        <div class="form-group text-center">
-          <%= f.label :caption %><br>
-          <%= f.text_field :caption, class: "form-control" %>
-        </div>
+    <div class="form-group text-center">
+      <%= f.submit class: "btn btn-success btn-block" %>
+    </div>
+  <% end %>
+</div>
+{% endhighlight %}
 
-        <div class="form-group text-center">
-          <%= f.submit class: "btn btn-success btn-block" %>
-        </div>
+<p class="text-bold">Checkpoint: This is how my photo form looks like:</p>
+
+<img src="../images/guides/9-photo-new-form.png" alt="" class="img-responsive center-block">
+
+<p>Lastly, open <code>app/views/photos/show.html.erb</code> and replace all of its content to:</p>
+
+{% highlight erb %}
+<div class="row">
+  <div class="col-md-6">
+    <%= image_tag @photo.file_url, class: "img-responsive"  if @photo.file.present? %>
+  </div>
+  <div class="col-md-6">
+    <h4>Rails Girls MY</h4>
+    <div class="btn-group">
+      <%= link_to edit_photo_path(@photo), class: "btn btn-warning btn-xs" do %>
+        <i class="i fa fa-pencil"></i>
+      <% end %>
+      <%= link_to photo_path(@photo), method: :delete, data: { confirm: "Are you sure you want to delete this photo?" }, class: "btn btn-danger btn-xs" do %>
+        <i class="i fa fa-trash"></i>
       <% end %>
     </div>
-    {% endhighlight %}
-
-    <p style="font-weight: bold;">Checkpoint: This is how my photo form looks like:</p>
-
-    <img src="../images/tutorials/instaclone-new.png" alt="" class="img-responsive">
-
-    <p>Lastly, open <code>app/views/photos/show.html.erb</code> and replace all of its content to:</p>
-
-    {% highlight erb %}
-    <div class="row">
-      <div class="col-md-12 col-md-offset-0v text-center">
-        <%= image_tag(@photo.file_url) if @photo.file.present? %>
-        <h3><%= @photo.caption %></h1>
-        <h4><%= @photo.user ? @photo.user.email : "RG Kuching" %></h4>
-      </div>
-    </div>
-    {% endhighlight %}
-
-    <h2 id="refine-the-navigation"><em>9.</em>Refine The Navigation</h2>
-
-    <p>Now, one last thing. Let's fine tune the route a little bit.</p>
-
-    <p>If go to the index page of your app (that’s your app URL without /photos part) it still shows the "Yay! You're on Rails!" page. Let's make it go directly to the photos page.</p>
-
-    <p>Open <code>config/routes.rb</code> and after the first line, add:</p>
-
-    {% highlight erb %}
-      root "photos#index"
-    {% endhighlight %}
-
-    <p>Test the change by refreshing the preview page in your browser.</p>
-
-    <p style="font-weight: bold;">Mentor: Talk about routes, and include details on the order of routes and their relation to static files.</p>
-
-    <p>Now, if you go to the main page of your app, you will see the list of your photos.</p>
-
-    <h2 id="whats-next"><em>10.</em> What's Next?</h2>
-    <p>If you're feeling adventurous:</p>
-    <ul>
-      <li>Add user registration on your app.</li>
-      <li>Add comment to your photos.</li>
-      <li>Display your app to Heroku.</li>
-    </ul>
-    <p>Go to our <a href="/guide-devise">Extended Guide Part #2.</a></p>
+    <hr>
+    <p><%= @photo.caption %></p>
   </div>
 </div>
+{% endhighlight %}
+
+<p class="text-bold">Checkpoint: And this is how my photo show page looks like:</p>
+
+<img src="../images/guides/10-photo-show.png" alt="" class="img-responsive center-block">
+
+<h3 id="refactoring"><em>9.</em>Refactoring</h3>
+
+<p>You probably noticed we haven't updated the styling for our edit page. But there's a reason for this.</p>
+
+<p>Because our <code>edit.html.erb</code> page looks very similar to the <code>new.html.erb</code> page - that they share the same code for displaying the form, we can actually remove this duplication by using a view partial.</p>
+
+<p>To do that, create a new file <code>_photo_form.html.erb</code> in <code>app/views/photos</code> and move all of the content from our <code>new.html.erb</code> to this new file.</p>
+
+<p>Next, replace <code>new.html.erb</code> with the code below so we can use the partial view:</p>
+
+{% highlight erb %}
+<h3>New Photo</h3>
+<%= render "photo_form" %>
+{% endhighlight %}
+
+<p>We also need to update our <code>edit.html.erb</code> to have the code as follows, by rewriting it completely:</p>
+
+{% highlight erb %}
+<h3>Edit "Photo #<%= @photo.id %>"</h3>
+<%= render "photo_form" %>
+{% endhighlight %}
+
+<p class="text-bold">Mentor: Talk about layouts and rendering in Rails.</p>
+
+<h3 id="refine-the-navigation"><em>10.</em>Refine The Navigation</h3>
+
+<p>Now, one last thing. Let's fine tune the route a little bit.</p>
+
+<p>If go to the index page of your app (that’s your app URL without /photos part) it still shows the "Yay! You're on Rails!" page. Let's make it go directly to the photos page.</p>
+
+<p>Open <code>config/routes.rb</code> and after the first line, add:</p>
+
+{% highlight ruby %}
+  root "photos#index"
+{% endhighlight %}
+
+<p>Test the change by refreshing the preview page in your browser.</p>
+
+<p class="text-bold">Mentor: Talk about routes, and include details on the order of routes and their relation to static files.</p>
+
+<p>Now, if you go to the main page of your app, you will see the list of your photos.</p>
+
+<h3 id="whats-next"><em>10.</em> What's Next?</h3>
+<p>If you're feeling adventurous:</p>
+
+<ul>
+  <li>Add user registration on your app.</li>
+  <li>Add comment to your photos.</li>
+  <li>Add ratings.</li>
+  <li>Deploy your app to Heroku.</li>
+</ul>
+
+<p>Check out our main page for additional guides.</p>

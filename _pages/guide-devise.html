@@ -4,196 +4,221 @@ layout: default
 permalink: /guide-devise/
 ---
 
-<div class="home">
-  <div class="content">
-    <h1 class="page-heading text-underline">Add User Authentication With Devise</h1>
+<h2 class="page-heading text-underline">Add User Authentication With Devise</h2>
 
-    <p>
-      <em>Created by Piotr Steininger, @polishprince.</em>
-      <br>
-      <em>Compiled for Rails Girls MY by Faezrah, <a href="https://twitter.com/railsgirlskl">@railsgirlskl</a></em>
-    </p>
+<p>
+  <em>Created by Piotr Steininger, <a href="https://twitter.com/polishprince">@polishprince</a></em>
+  <br>
+  <em>Compiled for Rails Girls MY by Faezrah, <a href="https://twitter.com/railsgirlskl">@railsgirlskl</a></em>
+</p>
 
-    <h4>This guide assumes that you have already built a Rails Girls app by following <a href="/guide-extended/">the extended app guide</a>.</h4>
+<h4>This guide assumes that you have already built a Rails Girls app by following <a href="/guide-extended/">the extended app guide</a>.</h4>
 
-    <h2 id="add-basic-user-authentication"><em>1.</em>Add Basic User Authentication</h2>
+<h3 id="add-basic-user-authentication"><em>1.</em>Add Basic User Authentication</h3>
 
-    <p>Now that you have a basic instagram clone, it would be nice if there is a way to let users sign up and sign in.</p>
+<p>Now that you have a basic instagram clone, it would be nice if there is a way to let users sign up and sign in.</p>
 
-    <p>To do this, we need to install an additional gem to help us handle the user registration process.</p>
+<p>To do this, we need to install an additional gem to help us handle the user registration process.</p>
 
-    <h2 id="add-and-setup-devise-in-your-app"><em>2.</em>Add and Setup Devise In Your App</h2>
+<h3 id="add-and-setup-devise-in-your-app"><em>2.</em>Add and Setup Devise In Your App</h3>
 
-    <p>Open <code>Gemfile</code> and add this line:</p>
+<p>Open <code>Gemfile</code> and add this line:</p>
 
-    {% highlight erb %}
-    gem 'devise'
-    {% endhighlight %}
+{% highlight ruby %}
+gem 'devise'
+{% endhighlight %}
 
-    <p>Next run this in the terminal:</p>
+<p>Next run this in the terminal:</p>
 
-    {% highlight sh %}$ bundle install{% endhighlight %}
+{% highlight sh %}
+$ bundle install
+{% endhighlight %}
 
-    <p>Once it's done, still in the terminal, run:</p>
+<p>Once it's done, still in the terminal, run:</p>
 
-    {% highlight sh %}$ bin/rails g devise:install{% endhighlight %}
+{% highlight sh %}
+$ bin/rails g devise:install
+{% endhighlight %}
 
-    <p>This command will generate everything we need to handle the registration flow.</p>
+<p>This command will generate everything we need to handle the registration flow.</p>
 
-    <p>Restart the Rails server if everything works well.</p>
+<p>Restart the Rails server if everything works well.</p>
 
-    {% highlight sh %}$ bin/rails server{% endhighlight %}
+{% highlight sh %}
+$ bin/rails server -b 0.0.0.0
+{% endhighlight %}
 
-    <h2 id="configure-devise"><em>3.</em>Configure Devise</h2>
+<h3 id="configure-devise"><em>3.</em>Configure Devise</h3>
 
-    <p>Open up <code>config/environments/development.rb</code> and add this line:</p>
+<p>Next, open up <code>app/views/layouts/application.html.erb</code> and type:</p>
 
-    {% highlight erb %}config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }{% endhighlight %}
+{% highlight erb %}
+<% if notice %>
+  <p class="alert alert-success"><%= notice %></p>
+<% end %>
+<% if alert %>
+  <p class="alert alert-danger"><%= alert %></p>
+<% end %>
+{% endhighlight %}
 
-    <p>This ensures you have defined default url options in your environments files.</p>
+<p>Before this line:</p>
 
-    <p>Next, open up <code>app/views/layouts/application.html.erb</code> and type:</p>
+{% highlight erb %}
+<%= yield %>
+{% endhighlight %}
 
-    {% highlight erb %}
-    <% if notice %>
-      <p class="alert alert-success"><%= notice %></p>
-    <% end %>
-    <% if alert %>
-      <p class="alert alert-danger"><%= alert %></p>
-    <% end %>
-    {% endhighlight %}
+<p>This code will display alerts and notices for our application, to slightly improve the user experience.</p>
 
-    <p>Before this line:</p>
+<p class="text-bold">Mentor: Talk a little bit about user authentication and Devise.</p>
 
-    {% highlight erb %}<%= yield %>{% endhighlight %}
+<h3 id="setup-user-model"><em>4.</em>Setup User Model</h3>
 
-    <p>This code will display alerts and notices for our application, to slightly improve user experience.</p>
+<p>Because we want to save users to our database, we need to create a model to handle just that.</p>
 
-    <p style="font-weight: bold;">Mentor: Talk a little bit about user authentication and Devise.</p>
+{% highlight sh %}
+$ bin/rails g devise User
+{% endhighlight %}
 
-    <h2 id="setup-user-model"><em>4.</em>Setup User Model</h2>
+<p>Remember we need to run a migration to tell Rails to save the changes in the database.</p>
 
-    <p>Because we want to save users to our database, we need to create a model to handle just that.</p>
+{% highlight sh %}
+$ bin/rails db:migrate
+{% endhighlight %}
 
-    {% highlight sh %}$ bin/rails g devise user {% endhighlight %}
+<p class="text-bold">Mentor: Explain what user model has been generated. What are the fields?</p>
 
-    <p>Remember we need to run a migration to tell Rails save the changes in the database.</p>
+<h3 id="create-your-first-user"><em>5.</em>Create Your First User</h3>
 
-    {% highlight sh %}$ bin/rails db:migrate {% endhighlight %}
+<p>Now that you have set everything up you can create your first user. Devise creates all the code and routes required to create accounts, log in, log out, etc.</p>
 
-    <p style="font-weight: bold;">Mentor: Explain what user model has been generated. What are the fields?</p>
+<p>Make sure your rails server is running, open <a href="http://localhost:3000/users/sign_up">http://localhost:3000/users/sign_up</a> and create your user account.</p>
 
-    <h2 id="create-your-first-user"><em>5.</em>Create Your First User</h2>
+<p class="text-bold">Checkpoint: If everything works well, your sign-up page should look something like this:</p>
 
-    <p>Now that you have set everything up you can create your first user. Devise creates all the code and routes required to create accounts, log in, log out, etc.</p>
+<img src="../images/guides/devise-signup.png" alt="" class="img-responsive center-block">
 
-    <p>Make sure your rails server is running, open <a href="http://localhost:3000/users/sign_up">http://localhost:3000/users/sign_up</a> and create your user account.</p>
+<h3 id="add-signup-and-login-links"><em>6.</em>Add Sign-up And Login Links</h3>
 
-    <p style="font-weight: bold;">Checkpoint: If everything works well, your sign-up should look something like this:</p>
+<p>All you need to do now is to add appropriate links or notice about the user being logged in in the top right corner of the navigation bar.</p>
 
-    <img src="../images/tutorials/devise-signup.png" alt="" class="img-responsive">
+<p>In order to do that, open <code>app/views/layouts/application.html.erb</code> and type:</p>
 
-    <h2 id="add-signup-and-login-links"><em>6.</em>Add Sign-up And Login Links</h2>
+{% highlight erb %}
+<% if user_signed_in? %>
+  <li><%= link_to 'Edit profile', edit_user_registration_path %></li>
+  <li><%= link_to "#{current_user.email}, logout?", destroy_user_session_path, method: :delete %></li>
+<% else %>
+  <li><%= link_to "Sign up", new_user_registration_path %></li>
+  <li><%= link_to "Login", new_user_session_path %></li>
+<% end %>
+{% endhighlight %}
 
-    <p>All you need to do now is to add appropriate links or notice about the user being logged in in the top right corner of the navigation bar.</p>
+<p>Make sure you add the code, right after:</p>
 
-    <p>In order to do that, open <code>app/views/layouts/application.html.erb</code> and type:</p>
+{% highlight erb %}
+<ul class="nav navbar-nav">
+  <li><%= link_to "New Photo", new_photo_path %></li>
+</ul>
+{% endhighlight %}
 
-    {% highlight erb %}
-    <% if user_signed_in? %>
-      <li><%= link_to 'Edit profile', edit_user_registration_path %></li>
-      <li><%= link_to "#{current_user.email}, logout?", destroy_user_session_path, method: :delete %></li>
-    <% else %>
-      <li><%= link_to "Sign up", new_user_registration_path %></li>
-      <li><%= link_to "Login", new_user_session_path %></li>
-    <% end %>
-    {% endhighlight %}
+<p class="text-bold">Mentor: Talk about the <code>user_signed_in?</code> and <code>current_user</code> helpers. Why are they useful?</p>
 
-    <p>Make sure you add the code, right after:</p>
+<h3 id="authenticate-user"><em>7.</em>Authenticate User</h3>
 
-    {% highlight erb %}
-    <ul class="nav navbar-nav">
-      <li><%= link_to "About", photos_path %></li>
-      <li><%= link_to "New Photo", new_photo_path %></li>
-    </ul>
-    {% endhighlight %}
+<p>Finally, add a function to force user to sign up or sign in before they can upload photos on our Instaclone application.</p>
 
-    <p style="font-weight: bold;">Mentor: Talk about the user_signed_in? and current_user helpers. Why are they useful?</p>
+<p>To do that, open up <code>app/controllers/photos_controller.rb</code> and add the following:</p>
 
-    <h2 id="authenticate-user"><em>7.</em>Authenticate User</h2>
+{% highlight ruby %}
+before_action :authenticate_user!, except: [:index, :show]
+{% endhighlight %}
 
-    <p>Finally, add a function to force user to sign up or sign in before they can upload photos on our Instaclone application.</p>
+<p>After the first line, which is:</p>
 
-    <p>To do that, open up <code>app/controllers/photo_controller.rb</code> and add the following:</p>
+{% highlight ruby %}
+class PhotosController < ApplicationController
+{% endhighlight %}
 
-    {% highlight erb %}before_action :authenticate_user!, except: [:index, :show]{% endhighlight %}
+<h3 id="user-and-photo-associations"><em>7.</em>User And Photo Associations</h3>
 
-    <p>After the first line, which is:</p>
+<p>Let's think for a moment.</p>
 
-    {% highlight erb %}class PhotosController < ApplicationController{% endhighlight %}
+<p>Now that we have a User model in our application, we can then modify our Photo model so that a signed-in user can upload photos, retrieve their photos, and display their name next to the photos just like Instagram.</p>
 
-    <h2 id="user-and-photo-associations"><em>7.</em>User And Photo Associations</h2>
+<p>To achieve this, first -- we will need to add an additional column to our Photo model.</p>
 
-    <p>Let's think for a moment.</p>
+<p>Run this in the terminal:</p>
 
-    <p>Now that we have a User model in our application, we can then modify our Photo model so that a signed-in user can upload photos, retrieve their photos, and display their name next to the photos just like Instagram.</p>
+{% highlight sh %}
+$ bin/rails generate migration AddUserIdToPhoto user_id:integer
+{% endhighlight %}
 
-    <p>To achieve this, first -- we will need to add an additional column to our Photo model.</p>
+{% highlight sh %}
+$ bin/rails db:migrate
+{% endhighlight %}
 
-    <p>Run this in the terminal:</p>
+<p>Now, we need to tell Rails the relationship between the two models.</p>
 
-    {% highlight sh %}$ bin/rails generate migration AddUserIdToPhoto user_id:integer{% endhighlight %}
+<p>Open up <code>app/models/user.rb</code>, and add this code:</p>
 
-    {% highlight sh %}$ bin/rails db:migrate {% endhighlight %}
+{% highlight ruby %}
+has_many :photos, dependent: :destroy
+{% endhighlight %}
 
-    <p>Now, we need to tell Rails the relationship between the two models.</p>
+<p class="text-bold">Checkpoint:</p>
 
-    <p>Open up <code>app/models/user.rb</code>, and add this code:</p>
+<p>My <code>user.rb</code> looks like this:</p>
 
-    {% highlight erb %} has_many :photos, dependent: :destroy {% endhighlight %}
+<img src="../images/guides/user-photos.png" alt="" class="img-responsive center-block">
 
-    <p style="font-weight: bold;">Checkpoint:</p>
+<p>Next, in <code>photo.rb</code>, add this code:</p>
 
-    <p>My <code>user.rb</code> looks like this:</p>
+{% highlight ruby %}
+belongs_to :user
+{% endhighlight %}
 
-    <img src="../images/tutorials/user-photos.png" alt="" class="img-responsive">
+<p>Below:</p>
 
-    <p>Next, in <code>photo.rb</code>, add this code:</p>
+{% highlight ruby %}
+mount_uploader :file, PhotoUploader
+{% endhighlight %}
 
-    {% highlight erb %} belongs_to :user {% endhighlight %}
+<p>We do this because we need to explicitly tell Rails about the associations between the two models, otherwise Rails will return an error.</p>
 
-    <p>Below:</p>
+<p>In our <code>create</code> action in <code>app/controllers/photos_controller.rb</code> replace this code:</p>
 
-    {% highlight erb %} mount_uploader :file, PhotoUploader {% endhighlight %}
+{% highlight ruby %}
+@photo = Photos.new(photo_params)
+{% endhighlight %}
 
-    <p>We do this because we need to explicitly tell Rails about the associations between the two models, otherwise Rails will return an error.</p>
+<p>With:</p>
 
-    <p>Lastly, in <code>app/controllers/photo_controller.rb</code> replace this code:</p>
+{% highlight ruby %}
+@photo = current_user.photos.new(photo_params)
+{% endhighlight %}
 
-    {% highlight erb %} @photo = Photos.new(photo_params) {% endhighlight %}
+<p>This code basically means we want to tie the photo with the current user logged-in.</p>
 
-    <p>With:</p>
+<p>Now we have the association setup between the two, play around the app to test if it works.</p>
 
-    {% highlight erb %} @photo = current_user.photos.new(photo_params) {% endhighlight %}
+<p>Lastly, on our <code>app/views/photos/index.html.erb</code>, replace the hard code name to user's email, like so:</p>
 
-    <p>This code basically means we want to tie the photo with the current user logged-in.</p>
+{% highlight erb %}
+<h4 class="name">
+  <%= photo.user ? photo.user.email : "RG Malaysia" %>
+</h4>
+{% endhighlight %}
 
-    <p>Now we have the association setup between the two, play around the app to test if it works.</p>
+<p>Don't forget to do the same in <code>app/views/photos/show.html.erb</code>:</p>
 
-    <p>Lastly, on our <code>app/views/photos/index.html.erb</code>, replace the hard code name to user's email, like so:</p>
+{% highlight erb %}
+<h4><%= @photo.user ? @photo.user.email : "RG Malaysia" %></h4>
+{% endhighlight %}
 
-    {% highlight erb %}
-    <h4 class="name">
-      <%= photo.user ? photo.user.email : "RG Kuching" %>
-    </h4>
-    {% endhighlight %}
+<p class="text-bold">Mentor: Talk a little bit about model associations in Rails.</p>
 
-    <p style="font-weight: bold;">Mentor: Talk a little bit about model associations in Rails.</p>
+<h3 id="adding-more-features"><em>8.</em>Adding More Features</h3>
 
-    <h2 id="adding-more-features"><em>8.</em>Adding More Features</h2>
+<p>You now have a basic instagram clone application. Next, you can enhance your app by adding comment to photos.</p>
 
-    <p>You now have a basic instagram clone application. Next, you can enhance your app by adding comment to photos.</p>
-
-    <p>Go to our <a href="/">Extended Guide Part #3.</a></p>
-  </div>
-</div>
+<p>Go to our <a href="/">Extended Guide Part #3.</a></p>
