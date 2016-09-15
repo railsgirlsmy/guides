@@ -4,8 +4,134 @@ layout: default
 permalink: /guide-commenting/
 ---
 
-<div class="home">
-  <div class="content">
-    <h1 id="rails-girls-app-tutorial">Add Comments To Your App</h1>
-  </div>
-</div>
+<h2 class="page-heading">Rails Girls MY App Guide (Extended)</h2>
+
+<p>
+  <em>Created by Janika Liiv, <a href="https://twitter.com/janikaliiv">@janikaliiv</a>.</em>
+  <br>
+  <em>Compiled and modified for Rails Girls MY by Faezrah, <a href="https://twitter.com/railsgirlskl">@railsgirlskl</a>.</em>
+</p>
+
+<h4>This guide assumes that you have already built a Rails Girls app by following <a href="/guide-extended/">the extended app guide</a> and you've added <a href="/guide-devise/">user authentication</a> to your app.</h4>
+
+<h3 id="create-comment-model"><em>1.</em>Create Comment Model</h3>
+
+<p>Create a comment model, with the comment body (contents of the comment), reference to the photos table (photo_id) and also reference to the users table (user_id).</p>
+
+{% highlight sh %}
+$ bin/rails generate model Comment body:text photo_id:integer user_id:integer
+{% endhighlight %}
+
+<p>This will create a migration file that lets your database know about the new comments table. Run the migration with:</p>
+
+{% highlight sh %}
+$ bin/rake db:migrate
+{% endhighlight %}
+
+<h3 id="associating-models"><em>2.</em>Associating Models</h3>
+
+<p>You need to make sure that Rails knows the relation between objects (photos, comments and users). As one photo can have many comments we need to make sure the photo model knows that. Open <code>app/models/photo.rb</code> and after the line:</p>
+
+{% highlight ruby %}
+class Photo < ApplicationRecord
+{% endhighlight %}
+
+<p>Add:</p>
+
+{% highlight ruby %}
+has_many :comments, dependent: :destroy
+{% endhighlight %}
+
+<p>Add the same relation in <code>app/models/user.rb</code>.</p>
+
+<p>The comment also has to know that it belongs to a photo and a user. So in <code>app/models/comment.rb</code>, after the first line, add the following:</p>
+
+{% highlight ruby %}
+belongs_to :photo
+belongs_to :user
+{% endhighlight %}
+
+<p class="text-bold">Resource: Learn more about <a href="http://guides.rubyonrails.org/association_basics.html" target="_blank">Active Record Associations</a>.</p>
+
+<h3 id="create-comment-controller"><em>3.</em>Create Comment Controller</h3>
+
+<p>Now, we need a controller for comments.</p>
+
+{% highlight sh %}
+$ bin/rails g controller comments
+{% endhighlight %}
+
+<p>We will then need to add a route so that Rails knows where we would like to navigate to see comments.</p>
+
+<p>In <code>config/routes.rb</code>, edit it as follows:</p>
+
+{% highlight ruby %}
+resources :photos do
+  resources :comments
+end
+{% endhighlight %}
+
+<p>This creates comments as a nested resource within photos.</p>
+
+<p class="text-bold">Resource: Learn more about <a href="http://guides.rubyonrails.org/routing.html" target="_blank">Rails Routing</a>.</p>
+
+<h3 id="render-comment-form-and-existing-comments"><em>4.</em>Render The Comment Form And Existing Comments</h3>
+
+<p>Like Instagram, users may add their comments after seeing the photo, and once they have added their comment, they will be sent back to the photo show page to see their comment.</p>
+
+<p>To do this, we need to add a form for comments in the <code>app/views/photos/show.html.erb</code>, like so:</p>
+
+{% highlight erb %}
+<% if user_signed_in? %>
+  <%= form_for [@photo, @photo.comments.build] do |f| %>
+    <div class="form-group">
+      <%= f.text_area :body, placeholder: "Add a comment...", class: "form-control" %>
+    </div>
+    <div class="form-group pull-right">
+      <%= f.submit class: "btn btn-default" %>
+    </div>
+  <% end %>
+<% end %>
+{% endhighlight %}
+
+<p>Your <code>comments_controller.rb</code> should have something like this:</p>
+
+{% highlight ruby %}
+
+before_action :authenticate_user!
+
+def create
+  @photo = Photo.find(params[:photo_id])
+  @comment = @photo.comments.create(comment_params)
+  @comment.user_id = current_user.id
+  if @comment.save
+    redirect_to photo_path(@photo)
+  else
+    redirect_to root_path
+  end
+end
+
+private
+  def comment_params
+    params.require(:comment).permit(:body)
+  end
+{% endhighlight %}
+
+<p>To display existing comments for a specific photo, we need to adjust our <code>app/views/photos/show.html.erb</code>. After:</p>
+
+{% highlight erb %}
+<p><%= @photo.caption %></p>
+{% endhighlight %}
+
+<p>You can add:</p>
+
+{% highlight erb %}
+<% @photo.comments.each do |comment| %>
+  <p>
+    <span style="font-weight: bold;"><%= comment.user.email %></span>
+    <span><%= comment.body %></span>
+  </p>
+<% end %>
+{% endhighlight %}
+
+<p>That's it.</p>
