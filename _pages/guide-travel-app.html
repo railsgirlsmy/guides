@@ -1,0 +1,520 @@
+---
+title: RGMY Guides
+layout: default
+permalink: /guide-travel-app/
+---
+
+<h2 id="rails-girls-app-tutorial">Rails Girls KL 2017 Travel Guide App Tutorial (Scaffold)</h2>
+
+<p>
+  <em>Based on the <a href="http://railsgirls-my.github.io/app/">original Rails Girls app guide</a> by Vesa Vänskä, <a href="https://twitter.com/vesan">@vesan</a></em>
+  <br>
+  <em>Extended for Rails Girls KL 2017 (<a href="https://twitter.com/railsgirlskl">@railsgirlskl</a>) by Ei-Vonne Kwan, <a href="https://twitter.com/evkwan">@evkwan</a> </em>
+  <br>
+  <em>Contributors: Faezrah </em>
+</p>
+
+<h3 id="get-to-know-the-tools">Get to know the tools</h3>
+
+<div class="indent">
+  <h3><i class="icon-browser">&nbsp;</i></h3>
+  <h3 id="web-browser">Web browser</h3>
+  <ul>
+    <li>(Firefox, Safari, Chrome) for viewing your application.</li>
+  </ul>
+
+  <h3><i class="icon-browser">&nbsp;</i></h3>
+  <h3 id="web-browser">CodeAnywhere</h3>
+  <ul>
+    <li><a href="https://codeanywhere.com/" target="_blank">CodeAnywhere</a> is a cloud-based development environment where we can write and run the code. It works in the browser.</li>
+  </ul>
+</div>
+
+<h3 id="creating-the-application"><em>1.</em>Creating the application</h3>
+
+<p>We're going to create a new Rails application, and it's going to be a travel catalogue app. In this app, you will be able to create posts about travel destinations and even add a picture to each destination.</p>
+
+<p>Hope you have already followed the quick setup guide for CodeAnywhere. Open your new railsgirls workspace in CodeAnywhere.</p>
+
+<p>At the start of the workstation, your terminal should be in the <code>workspace</code> directory location. Double check by typing this command in the terminal commandd line: </p>
+
+{% highlight sh %}$ pwd {% endhighlight %}
+
+<p>Don't type the <kbd>$</kbd> character. The <kbd>$</kbd> character is a cue that you should enter the command in the terminal.</p>
+
+
+<p>You should see:</p>
+
+<img src="../images/guides/travelapp/01-pwd.png" alt="" class="img-responsive center-block">
+
+<p>Now, let's create our first Rails app:</p>
+
+{% highlight sh %}$ rails new rgtravelguide {% endhighlight %}
+
+<p>When you run this command, it will install all the necessary files and folders for your first Rails application. Note it may take some time to finish the installation.</p>
+
+<p>Once it's done, you need to go to your newly created Rails app by typing:</p>
+
+{% highlight sh %}$ cd rgtravelguide {% endhighlight %}
+
+<p>You can then start the rails server by running:</p>
+
+{% highlight sh %}$ rails server -b 0.0.0.0 {% endhighlight %}
+
+<p>Notice now in the terminal, the command prompt is not visible. The command prompt looks like this:</p>
+
+<img src="../images/guides/travelapp/02-command-prompt.png" alt="" class="img-responsive center-block">
+
+<p>This is because you are now in the Rails server in that terminal tab.</p>
+
+<p>When the command prompt is not visible you cannot execute new commands. If you try running <code>cd</code> or another command it will not work. To return to the normal command prompt, hit <kbd>CTRL + C</kbd> in the terminal to quit the server.</p>
+
+<p>If you want to run other commands, simply open another terminal tab by right-clicking on your container and then selecting the <strong>SSH Terminal</strong> option.</p>
+
+<img src="../images/guides/travelapp/03-new-terminal.png" alt="" class="img-responsive center-block">
+
+<p><strong>Tip</strong>: You can keep two terminal tabs open. One for running the server and other to run all the commands.</p>
+
+<p><strong>Mentor: Explain what each command does. What was generated? What does the server do?</strong></p>
+
+<p>Preview your new by clicking on the preview link that was shown in your workspace container info page, as shown below:
+</p>
+<img src="../images/guides/travelapp/04-preview-link.png" alt="" class="img-responsive center-block">
+
+<p>Notice your URL should look something like this: <code>https://rgtravelguide-evkwan154533.codeanyapp.com
+</code>. If you have accidentally shut your container info page, you can access it again by right clicking on your container, and select the "Info" option as shown below: </p>
+
+<img src="../images/guides/travelapp/05-get-preview-link.png" alt="" class="img-responsive center-block">
+
+<br/>
+<p><strong>Checkpoint: Your default Rails app page should look like this:</strong></p>
+<p>Once you clicked on the preview link you should see "Welcome aboard" page, which means that the generation of your new app worked correctly.</p>
+<img src="../images/guides/scaffold/4-welcome-aboard.png" alt="" class="img-responsive center-block">
+
+<h3 id="create-idea-scaffold"><em>2.</em>Create Travel Guide scaffold</h3>
+
+<p>We're going to use Rails' scaffold functionality to generate a starting point that allows us to list, add, remove, edit, and view things; in our case travel destinations.</p>
+
+<p><strong>Mentor: What is Rails scaffolding? (Explain the command, the model name and related database table, naming conventions, attributes and types, etc.) What are migrations and why do you need them?</strong></p>
+
+<p>Exit your server if it is still running on the terminal on in the run tab and type in the code below in the terminal: </p>
+{% highlight sh %}$ rails generate scaffold destination name:string image:string title:string post:text {% endhighlight %}
+
+<p>The scaffold creates new files in your project directory, but to get it to work properly we need to run a couple of other commands to update our database and restart the server.</p>
+
+{% highlight sh %}
+$ rake db:migrate
+$ rails server -b 0.0.0.0
+{% endhighlight %}
+
+<p>Then preview in the browser, you should append <code>/destinations</code> to the URL shown in the address bar of your browser.</p>
+
+<p>You should see an empty page with the title "Listing destinations". At the bottom you will see a link to add a "New Destination".</p>
+
+<p>Play around with this a little. We got all these when we ran those scaffold commands earlier.</p>
+
+<p><strong>Checkpoint: Your listing destination page should look something like this:</strong></p>
+
+<img src="../images/guides/travelapp/06-first-look.png" alt="" class="img-responsive center-block" style="border: 1px solid grey;">
+
+<h3 id="design"><em>3.</em>Design</h3>
+
+<p><strong>Mentor: Talk about the relationship between HTML and Rails. What part of views is HTML and what is Embedded Ruby (ERB)? What is MVC and how does this relate to it? (Models and controllers are responsible for generating the HTML views.)</strong></p>
+
+<p>The app doesn't look very nice yet. Let's do something about that. We'll use Bootstrap to give us nicer styling real easily.</p>
+
+<p>In Codeanywhere, on the left side navigation panel, right-click on your rgtravelguide container and select "Refresh" as below: </p>
+<img src="../images/guides/travelapp/07-refresh-panel.png" alt="" class="img-responsive center-block">
+
+<p>A list of files should now appear (we generated them using the rails command in previous section). </p>
+<p>Use the file browser to open <code>rgtravelguide/apps/views/layouts/application.html.erb</code>.</p>
+
+<p>Below the line:</p>
+
+{% highlight erb %}
+<%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
+{% endhighlight %}
+
+<p>Add:</p>
+
+{% highlight ruby %}
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+{% endhighlight %}
+
+<p>Then replace:</p>
+
+{% highlight erb %}
+<%= yield %>
+{% endhighlight %}
+
+<p>With:</p>
+
+{% highlight erb %}
+<div class="container">
+  <%= yield %>
+</div>
+{% endhighlight %}
+
+<p>Let's also add a navigation bar and footer to the layout. In the same file, right under <code>&lt;body&gt;</code> add:</p>
+
+{% highlight erb %}
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <%= link_to "RGTravelGuide", destinations_path, class: "navbar-brand" %>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li><%= link_to "Destinations", destinations_path %></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+{% endhighlight %}
+
+<p>And before <code>&lt;/body&gt;</code> add:</p>
+
+{% highlight html %}
+<footer class="footer">
+  <div class="container">
+    <p class="text-muted">Rails Girls KL 2017</p>
+  </div>
+</footer>
+{% endhighlight %}
+
+<p>Don't forget to save your work everytime you make changes.</p>
+
+<p>Now let's also change the styling of the destinations table. Open <code>app/assets/stylesheets/application.css</code> and at the bottom add:</p>
+
+{% highlight scss %}
+body { padding-top: 50px; }
+footer { margin-top: 100px; }
+table, td, th { vertical-align: middle; border: none; }
+th { border-bottom: 1px solid #DDD; }
+{% endhighlight %}
+
+<p>Finally, delete the file <code>app/assets/stylesheets/scaffolds.scss</code> because we don't really need the default style generated by Rails.</p>
+
+<p>Now make sure you saved your files and refresh the browser tab previewing your app to see what was changed. You can also change the HTML &amp; CSS further.</p>
+
+<p><strong>Mentor: Talk a little about CSS and layouts.</strong></p>
+
+<h3 id="refine-the-navigation"><em>4.</em>Refine the navigation</h3>
+
+<p>Considering "destination" is the most important object in your app, we are going to put the "Add Destination" button on the navigation bar to make it always available.</p>
+
+<p>Open <code>app/views/layouts/application.html.erb</code>, under the line:</p>
+
+{% highlight erb %}
+<li><%= link_to "Destinations", destinations_path %></li>
+{% endhighlight %}
+
+<p>Add:</p>
+
+{% highlight erb %}
+<li><%= link_to 'Add New Destination', new_destination_path %></li>
+{% endhighlight %}
+
+<h3 id="adding-picture-uploads"><em>5.</em>Adding picture uploads</h3>
+
+<p>We need to install a piece of software to let us upload files in Rails.</p>
+
+<p>Open <code>Gemfile</code> in the project directory using your text editor and under the line</p>
+
+{% highlight ruby %}
+gem 'sdoc', '~> 0.4.0', group: :doc
+{% endhighlight %}
+
+<p>Add:</p>
+
+{% highlight ruby %}
+gem 'carrierwave'
+{% endhighlight %}
+
+<p><strong>Mentor: Explain what libraries are and why they are useful. Describe what open source software is.</strong></p>
+
+<p>Hit <kbd>CTRL + C</kbd> in the terminal to quit the server.</p>
+
+<p>In the terminal run:</p>
+
+{% highlight sh %}$ bundle install {% endhighlight %}
+
+<p>Now we can generate the code for handling uploads. In the terminal run:</p>
+
+{% highlight sh %}$ rails generate uploader Image {% endhighlight %}
+
+<p>At this point you need to restart the Rails server process in the terminal.</p>
+
+<p>Note: Some people might be using a second terminal to run the rails server continuously. If so you need to restart the Rails server process now. This is needed for the app to load the added library.</p>
+
+<p>Go to the terminal tab which runs the server and then hit <kbd>CTRL + C</kbd> to quit the server. Once it has stopped, you can press the up arrow to get to the last command entered, then hit enter to start the server again.</p>
+
+<p>Open <code>app/models/destination.rb</code> and under the line:</p>
+
+{% highlight ruby %}
+class Destination < ActiveRecord::Base
+{% endhighlight %}
+
+<p>Add:</p>
+
+{% highlight ruby %}
+mount_uploader :image, ImageUploader
+{% endhighlight %}
+
+<p>Open <code>app/views/destinations/_form.html.erb</code> and change:</p>
+
+{% highlight erb %}
+<%= f.text_field :image %>
+{% endhighlight %}
+
+<p>To:</p>
+
+{% highlight erb %}
+<%= f.file_field :image %>
+{% endhighlight %}
+
+<p>Sometimes, you might get an <em>TypeError: can't cast ActionDispatch::Http::UploadedFile to string.</em></p>
+
+<p>If this happens, in file <code>app/views/destinations/_form.html.erb</code> change the line:</p>
+
+{% highlight erb %}
+<%= form_for(destination) do |f| %>
+{% endhighlight %}
+
+<p>To:</p>
+
+{% highlight erb %}
+<%= form_for @destination, html: { multipart: true } do |f| %>
+{% endhighlight %}
+
+<p>In your browser, again click on the New Destination link. This time we can actually add a new destination post. When you upload an image though it doesn't look nice because it only shows a path to the file, so let's fix that.</p>
+
+<p>Open <code>app/views/destinations/show.html.erb</code> and change:</p>
+
+{% highlight erb %}
+<%= @destination.image %>
+{% endhighlight %}
+
+<p>To:</p>
+
+{% highlight erb %}
+<%= image_tag(@destination.image_url, :width => 600) if @destination.image.present? %>
+{% endhighlight %}
+
+<p>Now refresh your browser to see what changed.</p>
+
+<p><strong>Mentor: Talk a little about HTML.</strong></p>
+
+<h3 id="design-the-photo-upload-form"><em>6.</em>Design the destination post upload form</h3>
+
+<p>Now that you have an upload form that works, let's make it look nice with the help of Bootstrap.</p>
+
+<p>Open <code>app/views/destinations/_form.html.erb</code>, where you see:</p>
+
+{% highlight html %}
+<div class="field">
+{% endhighlight %}
+
+<p>Change to:</p>
+
+{% highlight html %}
+<div class="form-group">
+{% endhighlight %}
+
+<p>And add a <code>form-control</code> CSS class into each form input</p>
+
+{% highlight erb %}
+<%= f.text_field :name, class:'form-control' %>
+{% endhighlight %}
+
+{% highlight erb %}
+<%= f.file_field :image, class:'form-control' %>
+{% endhighlight %}
+
+{% highlight erb %}
+<%= f.text_field :title, class:'form-control'%>
+{% endhighlight %}
+
+{% highlight erb %}
+<%= f.text_area :post, class:'form-control'%>
+{% endhighlight %}
+
+<p>To make the button look nice, add a <code>btn btn-primary</code> CSS class to it, like so:</p>
+
+{% highlight erb %}
+<%= f.submit class:'btn btn-primary' %>
+{% endhighlight %}
+
+<p>We also want to justify the position of the Create button, so that it appears in the middle of the page. Add two css classes, <code>row text-center</code> to the parent div of the button, as shown below: </p>
+
+{% highlight erb %}
+  <div class="actions row text-center">
+    <%= f.submit class: 'btn btn-primary'%>
+  </div>
+  {% end hightlight %}
+
+<p>Refresh your page to see what has changed.</p>
+
+<p>To give more editing space in the text area where we would right a post about our destination, add a row number into the text area element as below: </p>
+
+{% highlight erb %}
+<%= f.text_area :post, rows: "10", class:'form-control'%>
+{% endhighlight %}
+
+<p><strong>Checkpoint:</strong> My photo upload form looks like this:</p>
+
+<img src="../images/guides/travelapp/08-form.png" alt="" class="img-responsive center-block" style="border: 1px solid grey;">
+
+<h3 id="design-the-photo-gallery"><em>7.</em>Design the photo gallery</h3>
+
+<p>Now it's time to make the Destinations gallery (destination list) look more professional. For that, we are going to replace the table layout with a div layout.</p>
+
+<p><strong>Mentor: Talk a little about table vs div (semantic markup).</strong></p>
+
+<p>Open <code>app/views/destinations/index.html.erb</code> and replace all lines with:</p>
+
+{% highlight erb %}
+<p id="notice"><%= notice %></p>
+
+<h1 class="row text-center">Destinations</h1>
+</br>
+<% if @destinations.any? %>
+  <% @destinations.in_groups_of(3) do |group| %>
+    <div class="row">
+      <% group.compact.each do |destination| %>
+        <div class="col-xs-4" style="margin-top: 20px;">
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <%= link_to image_tag(destination.image_url, :width => '100%', :height => '200px'), destination if destination.image.present?%>
+            </div>
+            <div class="panel-footer">
+              <h4 class="text-center"><%= link_to destination.name, destination %></h4>
+              <p class="text-center"><%= destination.title %></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+<% else  %>
+   <p>No destinations found.</p>
+<% end %>
+{% endhighlight %}
+
+<p><strong>Mentor: Explain what the new code means line by line, and talk a little about Bootstrap 12 grids layout.</strong></p>
+
+<p>Refresh it! We get a neat looking destinations gallery. Click the "New Destination" button, and add more destinations with real text - the page will look much better with content. There is a principle of contemporary web design: content is the best decoration.</p>
+
+<h3 id="design-the-photo-details-page"><em>8.</em>Design the Destination details page</h3>
+
+<p>Click the title of a photo, and you will be brought to the details page of the destination. Now it is still scaffold generated by Rails, so let's make it better.</p>
+
+<p>Open <code>app/views/destinations/show.html.erb</code> and replace all lines with</p>
+
+{% highlight erb %}
+<p id="notice"><%= notice %></p>
+
+<div class="row" style="margin:auto; width: 60%">
+<h1 class=" text-center" style="margin-bottom: 30px;" >
+  <strong><%= @destination.name %></strong>
+</h1>
+
+<p class="text-center">
+  <%= image_tag(@destination.image_url, :width => 600) if @destination.image.present? %>
+</p>
+
+<h2 class="text-center">
+  <strong><%= @destination.title %></strong>
+</h2>
+
+<p style="white-space: pre-line;">
+  <%= @destination.post %>
+</p>
+
+<br/>
+
+<p class="text-center">
+  <%= link_to 'Edit', edit_destination_path(@destination) %> |
+  <%= link_to 'Delete', @destination, confirm: 'Are you sure?', method: :delete %> |
+  <%= link_to 'Back', destinations_path %>
+</p>
+</div>
+{% endhighlight %}
+
+<p>Quick notes on what we have just done: we have removed the field labels such as "Name", "Image", "Title", "Post" from the page, as we really only want the <strong>values</strong> of these fields. They become the content to our page, and visitors do not need the labels to understand the content.</p>
+
+<p><strong>Mentor: Explain what the new code means line by line. Explain briefly about field-value pairs relating to models.</strong></p>
+
+<h3 id="finetune-the-routes"><em>9.</em>Finetune the routes</h3>
+
+<p>If go to the index page of your app (that's your app URL without <code>/destination</code> part) it still shows the "Welcome aboard" page. Let's make it go directly to the destinations page.</p>
+
+<p>Open <code>config/routes.rb</code> and after the first line add</p>
+
+{% highlight erb %}
+root "destinations#index"
+{% endhighlight %}
+
+<p>Test the change by refreshing the preview page in your browser.</p>
+
+<p><strong>Mentor: Talk about routes, and include details on the order of routes and their relation to static files.</strong></p>
+
+<h3 id="create-static-page-in-your-app"><em>10.</em>Create static page in your app</h3>
+
+<p>Lets add a static page to our app that will hold information about the author of this application — you!</p>
+
+{% highlight sh %}
+$ rails generate controller pages about
+{% endhighlight %}
+
+<p>This command will create you a new folder under app/views called /pages and under that a file called about.html.erb which will be your info page. Tip: Do not forget to right-click on your root project folder and refresh in order to see the newly generated files.</p>
+
+{% highlight erb %}
+get "pages/about"
+{% endhighlight %}
+
+<p>It also adds a new simple route to your routes.rb.</p>
+
+<p>Now you can open the file <code>app/views/pages/about.html.erb</code> and add information about you in HTML and append /pages/about to the URL to see your new about page.</p>
+
+<p>To add a link to the info page, open the file <code>app/views/layouts/application.html.erb</code>, and insert:</p>
+
+{% highlight erb %}
+<p class="navbar-text navbar-right">
+  <%= link_to 'About', pages_about_path, class:'navbar-link' %>
+</p>
+{% endhighlight %}
+
+<p>In between:</p>
+
+{% highlight html %}
+  <%= link_to "RGTravelGuide", destinations_path, class: "navbar-brand" %>
+</div>
+{% endhighlight %}
+
+And:
+
+{% highlight erb %}
+<div id="navbar" class="navbar-collapse collapse">
+{% endhighlight %}
+
+<p> What the inserted code does is that it is adding a new menu item for the info page which will be placed to the <i>right</i> of the navigation bar. Restart your server if you haven't already, and refresh your page to check it out!</p>
+
+<h3 id="whats-next"><em>11.</em>What's Next?</h3>
+
+<p>Enhance your travel guide app. Some sugesstions:</p>
+
+<ul>
+  <li>Add user registration on your app.</li>
+  <li>Add comment to your destination posts.</li>
+  <li>Add ratings.</li>
+  <li>Deploy your app to Heroku.</li>
+</ul>
+
+<p>Check out our guides!</p>
