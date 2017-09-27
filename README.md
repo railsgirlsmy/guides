@@ -5,3 +5,4 @@
 - Your First Rails App (Extended)
 - Add User Authentication With Devise
 - Add Comments To Your App
+- How To Continue Your Coding Journey
